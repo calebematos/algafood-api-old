@@ -13,9 +13,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class FormaPagamento {
 
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@EqualsAndHashCode.Include
 	private Long id;
 	
 	private String descricao;
