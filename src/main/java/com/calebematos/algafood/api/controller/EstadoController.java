@@ -2,6 +2,8 @@ package com.calebematos.algafood.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,13 +43,13 @@ public class EstadoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Estado> adicionar(@RequestBody Estado estado) {
+	public ResponseEntity<Estado> adicionar(@RequestBody @Valid Estado estado) {
 		estado = estadoService.salvar(estado);
 		return ResponseEntity.status(HttpStatus.CREATED).body(estado);
 	}
 
 	@PutMapping("/{estadoId}")
-	public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId, @RequestBody Estado estado) {
+	public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
 
 		Estado cozinhaAtual = estadoService.buscar(estadoId);
 		BeanUtils.copyProperties(estado, cozinhaAtual, "id");

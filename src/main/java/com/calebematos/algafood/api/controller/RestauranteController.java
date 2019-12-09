@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
@@ -53,7 +54,7 @@ public class RestauranteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Restaurante> adicionar(@RequestBody Restaurante restaurante) {
+	public ResponseEntity<Restaurante> adicionar(@RequestBody @Valid Restaurante restaurante) {
 		try {
 			Restaurante restauranteSalvo = restauranteService.salvar(restaurante);
 			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteSalvo);
@@ -64,7 +65,7 @@ public class RestauranteController {
 
 	@PutMapping("/{restauranteId}")
 	public ResponseEntity<Restaurante> atualizar(@PathVariable Long restauranteId,
-			@RequestBody Restaurante restaurante) {
+			@RequestBody @Valid Restaurante restaurante) {
 		Restaurante restauranteAtual = buscar(restauranteId);
 		BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro");
 		try {
@@ -76,8 +77,8 @@ public class RestauranteController {
 	}
 
 	@PatchMapping("/{restauranteId}")
-	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId,
-			@RequestBody Map<String, Object> campos, HttpServletRequest request) {
+	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos,
+			HttpServletRequest request) {
 		Optional<Restaurante> restauranteAtualOpt = restauranteRepository.findById(restauranteId);
 
 		if (restauranteAtualOpt.isEmpty()) {
@@ -90,7 +91,7 @@ public class RestauranteController {
 	}
 
 	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino, HttpServletRequest request) {
-		
+
 		ServletServerHttpRequest serverHttpRequest = new ServletServerHttpRequest(request);
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
