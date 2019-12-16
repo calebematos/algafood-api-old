@@ -1,4 +1,4 @@
-package com.calebematos.algafood;
+package com.calebematos.algafood.core.validation;
 
 public interface Groups {
 

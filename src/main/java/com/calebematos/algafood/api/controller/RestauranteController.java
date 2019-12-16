@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
+import com.calebematos.algafood.domain.exception.ValidacaoException;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
 import com.calebematos.algafood.domain.service.RestauranteService;
@@ -42,6 +45,9 @@ public class RestauranteController {
 
 	@Autowired
 	private RestauranteService restauranteService;
+	
+	@Autowired
+	private SmartValidator validator;
 
 	@GetMapping
 	public List<Restaurante> listar() {
@@ -85,9 +91,22 @@ public class RestauranteController {
 			return ResponseEntity.notFound().build();
 		}
 
-		merge(campos, restauranteAtualOpt.get(), request);
+		Restaurante restauranteAtual = restauranteAtualOpt.get();
+		merge(campos, restauranteAtual, request);
+		
+		validar(restauranteAtual, "restaurante");
 
-		return atualizar(restauranteId, restauranteAtualOpt.get());
+		return atualizar(restauranteId, restauranteAtual);
+	}
+
+	private void validar(Restaurante restaurante, String objectName) {
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
+		validator.validate(restaurante, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			throw new ValidacaoException(bindingResult);
+		}
+		
 	}
 
 	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino, HttpServletRequest request) {
