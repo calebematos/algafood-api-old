@@ -3,6 +3,7 @@ package com.calebematos.algafood.domain.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.calebematos.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.calebematos.algafood.domain.model.Cozinha;
@@ -18,6 +19,7 @@ public class RestauranteService {
 	@Autowired
 	private CozinhaService cozinhaService;
 
+	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 

@@ -16,9 +16,9 @@ public enum ProblemType {
 	private String title;
 	private String uri;
 
-	private ProblemType(String path, String uri) {
-		this.title = "https://algafood.com.br" + path;
-		this.uri = uri;
+	private ProblemType(String path, String title) {
+		this.uri = "https://algafood.com.br" + path;
+		this.title = title;
 	}
 
 }
