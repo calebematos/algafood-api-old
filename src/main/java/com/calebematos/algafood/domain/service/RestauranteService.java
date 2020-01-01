@@ -38,8 +38,18 @@ public class RestauranteService {
 	}
 
 	public Restaurante buscar(Long restauranteId) {
-		return restauranteRepository.findById(restauranteId).orElseThrow(
-				() -> new RestauranteNaoEncontradoException(restauranteId));
+		return restauranteRepository.findById(restauranteId)
+				.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
+	}
+
+	@Transactional
+	public void ativarIntativar(Long restauranteId, Boolean ativo) {
+		Restaurante restauranteAtual = buscar(restauranteId);
+		if (ativo) {
+			restauranteAtual.ativar();
+		} else {
+			restauranteAtual.inativar();
+		}
 	}
 
 }

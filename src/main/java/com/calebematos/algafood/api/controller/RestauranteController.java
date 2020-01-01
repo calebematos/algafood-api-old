@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calebematos.algafood.api.assembler.RestauranteInputDisassembler;
+import com.calebematos.algafood.api.assembler.RestauranteModelAssembler;
+import com.calebematos.algafood.api.model.RestauranteModel;
+import com.calebematos.algafood.api.model.input.RestauranteInput;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.exception.ValidacaoException;
@@ -48,38 +52,58 @@ public class RestauranteController {
 	
 	@Autowired
 	private SmartValidator validator;
+	
+	@Autowired
+	private RestauranteModelAssembler restauranteModelAssembler;
+	
+	@Autowired
+	private RestauranteInputDisassembler restauranteInputDisassembler;
 
 	@GetMapping
-	public List<Restaurante> listar() {
-		return restauranteRepository.findAll();
+	public List<RestauranteModel> listar() {
+		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
 
 	@GetMapping("/{restauranteId}")
-	public Restaurante buscar(@PathVariable Long restauranteId) {
-		return restauranteService.buscar(restauranteId);
+	public RestauranteModel buscar(@PathVariable Long restauranteId) {
+		Restaurante restaurante = restauranteService.buscar(restauranteId);
+		
+		RestauranteModel restauranteModel = restauranteModelAssembler.toModel(restaurante);
+		
+		return restauranteModel;
+		
 	}
 
 	@PostMapping
-	public ResponseEntity<Restaurante> adicionar(@RequestBody @Valid Restaurante restaurante) {
+	public ResponseEntity<RestauranteModel> adicionar(@RequestBody @Valid RestauranteInput restaurante) {
 		try {
-			Restaurante restauranteSalvo = restauranteService.salvar(restaurante);
-			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteSalvo);
+			Restaurante restauranteSalvo = restauranteService.salvar(restauranteInputDisassembler.toDomainObject(restaurante));
+			RestauranteModel restauranteModel = restauranteModelAssembler.toModel(restauranteSalvo);
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteModel);
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
 
 	@PutMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> atualizar(@PathVariable Long restauranteId,
-			@RequestBody @Valid Restaurante restaurante) {
-		Restaurante restauranteAtual = buscar(restauranteId);
-		BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro");
+	public ResponseEntity<RestauranteModel> atualizar(@PathVariable Long restauranteId,
+			@RequestBody @Valid RestauranteInput restauranteInput) {
+		Restaurante restauranteAtual = restauranteService.buscar(restauranteId);
+		
+		restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 		try {
 			restauranteAtual = restauranteService.salvar(restauranteAtual);
-			return ResponseEntity.ok(restauranteAtual);
+			return ResponseEntity.ok(restauranteModelAssembler.toModel(restauranteAtual));
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
+	}
+
+	@PutMapping("/{restauranteId}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarInativar(@PathVariable Long restauranteId, @RequestBody Boolean ativo) {
+		restauranteService.ativarIntativar(restauranteId, ativo);
 	}
 
 	@PatchMapping("/{restauranteId}")
@@ -96,7 +120,8 @@ public class RestauranteController {
 		
 		validar(restauranteAtual, "restaurante");
 
-		return atualizar(restauranteId, restauranteAtual);
+//		return atualizar(restauranteId, restauranteAtual);
+		return null;
 	}
 
 	private void validar(Restaurante restaurante, String objectName) {

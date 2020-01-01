@@ -1,8 +1,7 @@
 package com.calebematos.algafood.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +36,11 @@ public class Pedido {
 	private BigDecimal valorTotal;
 
 	@CreationTimestamp
-	private LocalDateTime dataCriacao;
+	private OffsetDateTime dataCriacao;
 
-	private LocalDate dataConfirmacao;
-	private LocalDate dataCancelamento;
-	private LocalDate dataEntrega;
+	private OffsetDateTime dataConfirmacao;
+	private OffsetDateTime dataCancelamento;
+	private OffsetDateTime dataEntrega;
 
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;

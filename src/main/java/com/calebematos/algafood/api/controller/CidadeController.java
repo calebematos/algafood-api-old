@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calebematos.algafood.api.assembler.CidadeInputDisassembler;
+import com.calebematos.algafood.api.assembler.CidadeModelAssembler;
+import com.calebematos.algafood.api.model.CidadeModel;
+import com.calebematos.algafood.api.model.input.CidadeInput;
 import com.calebematos.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.model.Cidade;
@@ -33,32 +37,43 @@ public class CidadeController {
 	@Autowired
 	private CidadeService cidadeService;
 
+	@Autowired
+	private CidadeModelAssembler cidadeModelAssembler;
+	
+	@Autowired
+	private CidadeInputDisassembler cidadeInputDisassembler;
+	
 	@GetMapping
-	public List<Cidade> listar() {
-		return cidadeRepository.findAll();
+	public List<CidadeModel> listar() {
+		return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
 	}
 
 	@GetMapping("/{cidadeId}")
-	public Cidade buscar(@PathVariable Long cidadeId) {
-		return cidadeService.buscar(cidadeId);
+	public CidadeModel buscar(@PathVariable Long cidadeId) {
+		Cidade cidade = cidadeService.buscar(cidadeId);
+		return cidadeModelAssembler.toModel(cidade);
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Cidade adicionar(@RequestBody @Valid Cidade cidade) {
+	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
 		try {
-			return cidadeService.salvar(cidade);
+			Cidade cidade = cidadeInputDisassembler.toDomainObject(cidadeInput);
+			cidade = cidadeService.salvar(cidade);
+			return cidadeModelAssembler.toModel(cidade);
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}
 	}
 
 	@PutMapping("/{cidadeId}")
-	public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody @Valid Cidade cidade) {
+	public CidadeModel atualizar(@PathVariable Long cidadeId, @RequestBody @Valid CidadeInput cidadeInput) {
 		Cidade cidadeAtual = cidadeService.buscar(cidadeId);
+		Cidade cidade = cidadeInputDisassembler.toDomainObject(cidadeInput);
 		BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 		try {
-			return cidadeService.salvar(cidadeAtual);
+			Cidade cidadeSalva = cidadeService.salvar(cidadeAtual);
+			return cidadeModelAssembler.toModel(cidadeSalva);
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}

@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calebematos.algafood.api.assembler.EstadoInputDisassembler;
+import com.calebematos.algafood.api.assembler.EstadoModelAssembler;
+import com.calebematos.algafood.api.model.EstadoModel;
+import com.calebematos.algafood.api.model.input.EstadoInput;
 import com.calebematos.algafood.domain.model.Estado;
 import com.calebematos.algafood.domain.repository.EstadoRepository;
 import com.calebematos.algafood.domain.service.EstadoService;
@@ -31,30 +35,37 @@ public class EstadoController {
 
 	@Autowired
 	private EstadoService estadoService;
+	
+	@Autowired
+	private EstadoModelAssembler estadoModelAssembler;
+	
+	private EstadoInputDisassembler estadoInputDisassembler;
 
 	@GetMapping
-	public List<Estado> listar() {
-		return estadoRepository.findAll();
+	public List<EstadoModel> listar() {
+		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
 	}
 
 	@GetMapping("/{estadoId}")
-	public Estado buscar(@PathVariable Long estadoId) {
-		return estadoService.buscar(estadoId);
+	public EstadoModel buscar(@PathVariable Long estadoId) {
+		Estado estado = estadoService.buscar(estadoId);
+		return estadoModelAssembler.toModel(estado);
 	}
 
 	@PostMapping
-	public ResponseEntity<Estado> adicionar(@RequestBody @Valid Estado estado) {
+	public ResponseEntity<EstadoModel> adicionar(@RequestBody @Valid EstadoInput estadoInput) {
+		Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
 		estado = estadoService.salvar(estado);
-		return ResponseEntity.status(HttpStatus.CREATED).body(estado);
+		return ResponseEntity.status(HttpStatus.CREATED).body(estadoModelAssembler.toModel(estado));
 	}
 
 	@PutMapping("/{estadoId}")
-	public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
-
-		Estado cozinhaAtual = estadoService.buscar(estadoId);
-		BeanUtils.copyProperties(estado, cozinhaAtual, "id");
-		cozinhaAtual = estadoService.salvar(cozinhaAtual);
-		return ResponseEntity.ok(cozinhaAtual);
+	public ResponseEntity<EstadoModel> atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
+		Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
+		Estado estadoAtual = estadoService.buscar(estadoId);
+		BeanUtils.copyProperties(estado, estadoAtual, "id");
+		estadoAtual = estadoService.salvar(estadoAtual);
+		return ResponseEntity.ok(estadoModelAssembler.toModel(estadoAtual));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
