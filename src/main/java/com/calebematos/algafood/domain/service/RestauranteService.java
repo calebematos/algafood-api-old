@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.calebematos.algafood.domain.exception.RestauranteNaoEncontradoException;
+import com.calebematos.algafood.domain.model.Cidade;
 import com.calebematos.algafood.domain.model.Cozinha;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
@@ -18,13 +19,20 @@ public class RestauranteService {
 
 	@Autowired
 	private CozinhaService cozinhaService;
+	
+	@Autowired
+	private CidadeService cidadeService;
 
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
-
+		Long cidadeId = restaurante.getEndereco().getCidade().getId();
+		
 		Cozinha cozinha = cozinhaService.buscar(cozinhaId);
 		restaurante.setCozinha(cozinha);
+		
+		Cidade cidade = cidadeService.buscar(cidadeId);
+		restaurante.getEndereco().setCidade(cidade);
 
 		return restauranteRepository.save(restaurante);
 	}
