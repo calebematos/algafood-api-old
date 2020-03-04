@@ -21,7 +21,6 @@ public class GrupoModelAssembler {
 	}
 	
 	public List<GrupoModel> toCollectionModel(List<Grupo> grupos){
-	
 		return grupos.stream().map(grupo -> toModel(grupo)).collect(Collectors.toList());
 	}
 	
