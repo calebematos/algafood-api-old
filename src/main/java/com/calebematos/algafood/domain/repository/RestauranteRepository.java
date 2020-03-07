@@ -19,5 +19,5 @@ public interface RestauranteRepository
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
 	List<Restaurante> findByNomeContaining(String nome);
-
+	
 }

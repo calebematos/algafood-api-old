@@ -72,6 +72,6 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{usuarioId}/senha")
 	public void alterarSenha(@PathVariable Long usuarioId, @Valid @RequestBody SenhaInput senhaInput) {
-		usuarioService.alterarSenha(usuarioId, senhaInput);
+		usuarioService.alterarSenha(usuarioId, senhaInput.getSenhaAtual(), senhaInput.getNovaSenha());
 	}
 }
