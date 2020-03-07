@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.calebematos.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.calebematos.algafood.domain.model.Cidade;
 import com.calebematos.algafood.domain.model.Cozinha;
+import com.calebematos.algafood.domain.model.FormaPagamento;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
 
@@ -19,18 +20,21 @@ public class RestauranteService {
 
 	@Autowired
 	private CozinhaService cozinhaService;
-	
+
 	@Autowired
 	private CidadeService cidadeService;
+
+	@Autowired
+	private FormaPagamentoService formaPagamentoService;
 
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Long cidadeId = restaurante.getEndereco().getCidade().getId();
-		
+
 		Cozinha cozinha = cozinhaService.buscar(cozinhaId);
 		restaurante.setCozinha(cozinha);
-		
+
 		Cidade cidade = cidadeService.buscar(cidadeId);
 		restaurante.getEndereco().setCidade(cidade);
 
@@ -58,6 +62,22 @@ public class RestauranteService {
 		} else {
 			restauranteAtual.inativar();
 		}
+	}
+
+	@Transactional
+	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		Restaurante restaurante = buscar(restauranteId);
+		FormaPagamento formaPagamento = formaPagamentoService.buscar(formaPagamentoId);
+
+		restaurante.removerFormaPagamento(formaPagamento);
+	}
+
+	@Transactional
+	public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		Restaurante restaurante = buscar(restauranteId);
+		FormaPagamento formaPagamento = formaPagamentoService.buscar(formaPagamentoId);
+
+		restaurante.adicionarFormaPagamento(formaPagamento);
 	}
 
 }
