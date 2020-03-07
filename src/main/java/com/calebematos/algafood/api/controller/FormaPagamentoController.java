@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.calebematos.algafood.api.assembler.FormaPagamentoAssembler;
+import com.calebematos.algafood.api.assembler.FormaPagamentoModelAssembler;
 import com.calebematos.algafood.api.assembler.FormaPagamentoInputDisassembler;
 import com.calebematos.algafood.api.model.FormaPagamentoModel;
 import com.calebematos.algafood.api.model.input.FormaPagamentoInput;
@@ -37,26 +37,26 @@ public class FormaPagamentoController {
 	private FormaPagamentoService formaPagamentoService;
 	
 	@Autowired
-	private FormaPagamentoAssembler formaPagamentoAssembler;
+	private FormaPagamentoModelAssembler formaPagamentoModelAssembler;
 	
 	@Autowired
 	private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 	
 	public List<FormaPagamentoModel> listar(){
-		return formaPagamentoAssembler.toCollectionModel(formaPagamentoRepository.findAll());
+		return formaPagamentoModelAssembler.toCollectionModel(formaPagamentoRepository.findAll());
 	}
 	
 	@GetMapping("/{formaPagamentoId}")
 	public FormaPagamentoModel buscar(@PathVariable Long formaPagamentoId) {
 		FormaPagamento formaPagamento = formaPagamentoService.buscar(formaPagamentoId);
-		return formaPagamentoAssembler.toModel(formaPagamento);
+		return formaPagamentoModelAssembler.toModel(formaPagamento);
 	}
 	
 	@PostMapping
 	public ResponseEntity<FormaPagamentoModel> adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
 		FormaPagamento formaPagamento = formaPagamentoInputDisassembler.toDomainObject(formaPagamentoInput);
 		formaPagamento = formaPagamentoService.salvar(formaPagamento);
-		return ResponseEntity.status(HttpStatus.CREATED).body(formaPagamentoAssembler.toModel(formaPagamento));
+		return ResponseEntity.status(HttpStatus.CREATED).body(formaPagamentoModelAssembler.toModel(formaPagamento));
 	}
 	
 	@PutMapping("/{formaPagamentoId}")
@@ -65,7 +65,7 @@ public class FormaPagamentoController {
 		FormaPagamento formaPagamentoAtual = formaPagamentoService.buscar(formaPagamentoId);
 		BeanUtils.copyProperties(formaPagamento, formaPagamentoAtual, "id");
 		formaPagamentoAtual = formaPagamentoService.salvar(formaPagamentoAtual);
-		return ResponseEntity.ok(formaPagamentoAssembler.toModel(formaPagamentoAtual));
+		return ResponseEntity.ok(formaPagamentoModelAssembler.toModel(formaPagamentoAtual));
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
