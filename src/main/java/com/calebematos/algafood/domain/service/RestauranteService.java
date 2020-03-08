@@ -80,4 +80,16 @@ public class RestauranteService {
 		restaurante.adicionarFormaPagamento(formaPagamento);
 	}
 
+	@Transactional
+	public void fechar(Long restauranteId) {
+		Restaurante restaurante = buscar(restauranteId);
+		restaurante.fechar();
+	}
+
+	@Transactional
+	public void abrir(Long restauranteId) {
+		Restaurante restaurante = buscar(restauranteId);
+		restaurante.abrir();
+	}
+
 }
