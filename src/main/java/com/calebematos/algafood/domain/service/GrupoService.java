@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.calebematos.algafood.domain.exception.EntidadeEmUsoException;
 import com.calebematos.algafood.domain.exception.GrupoNaoEncontradoException;
 import com.calebematos.algafood.domain.model.Grupo;
+import com.calebematos.algafood.domain.model.Permissao;
 import com.calebematos.algafood.domain.repository.GrupoRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class GrupoService {
 	
 	@Autowired
 	private GrupoRepository grupoRepository;
+	
+	@Autowired
+	private PermissaoService permissaoService;
 
 	public Grupo buscar(Long grupoId) {
 		return grupoRepository.findById(grupoId)
@@ -41,6 +45,22 @@ public class GrupoService {
 			throw new EntidadeEmUsoException(
 					String.format(MSG_GRUPO_EM_USO, grupoId));
 		}
+	}
+
+	@Transactional
+	public void associarPermissao(Long grupoId, Long permissaoId) {
+		Grupo grupo = buscar(grupoId);
+		Permissao permissao = permissaoService.buscar(permissaoId);
+		
+		grupo.adicionarPermissao(permissao);
+	}
+	
+	@Transactional
+	public void desassociarPermissao(Long grupoId, Long permissaoId) {
+		Grupo grupo = buscar(grupoId);
+		Permissao permissao = permissaoService.buscar(permissaoId);
+		
+		grupo.removerPermissao(permissao);
 	}
 
 }
