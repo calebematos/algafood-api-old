@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.exception.UsuarioNaoEncontradoException;
+import com.calebematos.algafood.domain.model.Grupo;
 import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.UsuarioRepository;
 
@@ -16,6 +17,9 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private GrupoService grupoService;
 
 	public Usuario buscar(Long usuarioId) {
 		return usuarioRepository.findById(usuarioId)
@@ -53,6 +57,22 @@ public class UsuarioService {
 
 		salvar(usuario);
 
+	}
+
+	@Transactional
+	public void associarGrupo(Long usuarioId, Long grupoId) {
+		Usuario usuario = buscar(usuarioId);
+		Grupo grupo = grupoService.buscar(grupoId);
+		
+		usuario.adicionarGrupo(grupo);
+	}
+
+	@Transactional
+	public void desassociarGrupo(Long usuarioId, Long grupoId) {
+		Usuario usuario = buscar(usuarioId);
+		Grupo grupo = grupoService.buscar(grupoId);
+		
+		usuario.removerGrupo(grupo);
 	}
 
 }
