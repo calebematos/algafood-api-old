@@ -17,6 +17,7 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.calebematos.algafood.api.model.RestauranteModel;
 import com.calebematos.algafood.api.model.input.RestauranteInput;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
+import com.calebematos.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.calebematos.algafood.domain.exception.ValidacaoException;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
@@ -104,6 +106,26 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativarInativar(@PathVariable Long restauranteId, @RequestBody Boolean ativo) {
 		restauranteService.ativarIntativar(restauranteId, ativo);
+	}
+	
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarmultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			restauranteService.ativar(restauranteIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+	
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarmultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			restauranteService.inativar(restauranteIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 	
 	@PutMapping("/{restauranteId}/fechamento")

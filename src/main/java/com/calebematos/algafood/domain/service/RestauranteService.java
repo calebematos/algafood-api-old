@@ -1,5 +1,7 @@
 package com.calebematos.algafood.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import com.calebematos.algafood.domain.model.Cidade;
 import com.calebematos.algafood.domain.model.Cozinha;
 import com.calebematos.algafood.domain.model.FormaPagamento;
 import com.calebematos.algafood.domain.model.Restaurante;
+import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
 
 @Service
@@ -26,6 +29,9 @@ public class RestauranteService {
 
 	@Autowired
 	private FormaPagamentoService formaPagamentoService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
@@ -54,14 +60,34 @@ public class RestauranteService {
 				.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
 	}
 
-	@Transactional
 	public void ativarIntativar(Long restauranteId, Boolean ativo) {
-		Restaurante restauranteAtual = buscar(restauranteId);
 		if (ativo) {
-			restauranteAtual.ativar();
+			ativar(restauranteId);
 		} else {
-			restauranteAtual.inativar();
+			inativar(restauranteId);
 		}
+	}
+	
+	@Transactional
+	private void ativar(Long restauranteId) {
+		Restaurante restauranteAtual = buscar(restauranteId);
+		restauranteAtual.ativar();
+	}
+	
+	@Transactional
+	private void inativar(Long restauranteId) {
+		Restaurante restauranteAtual = buscar(restauranteId);
+		restauranteAtual.inativar();
+	}
+	
+	@Transactional
+	public void ativar(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::ativar);
+	}
+	
+	@Transactional
+	public void inativar(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::inativar);
 	}
 
 	@Transactional
@@ -90,6 +116,22 @@ public class RestauranteService {
 	public void abrir(Long restauranteId) {
 		Restaurante restaurante = buscar(restauranteId);
 		restaurante.abrir();
+	}
+
+	@Transactional
+	public void associarUsuario(Long restauranteId, Long usuarioId) {
+		Restaurante restaurante = buscar(restauranteId);
+		Usuario usuario = usuarioService.buscar(usuarioId);
+		
+		restaurante.adicionarUsuario(usuario);
+	}
+	
+	@Transactional
+	public void desassociarUsuario(Long restauranteId, Long usuarioId) {
+		Restaurante restaurante = buscar(restauranteId);
+		Usuario usuario = usuarioService.buscar(usuarioId);
+		
+		restaurante.removerUsuario(usuario);
 	}
 
 }

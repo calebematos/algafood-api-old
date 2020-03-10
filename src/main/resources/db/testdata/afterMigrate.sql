@@ -75,5 +75,13 @@ insert into grupo(nome) values('Gerente'), ('Vendedor'), ('Secretária'), ('Cada
 
 insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
 
-insert into usuario(nome, email, senha, data_cadastro) values('João', 'joao@algafood.com', '123', utc_timestamp), ('Maira Joaquina', 'maria@algafood.com', '123', utc_timestamp), ('José Souza', 'jose.souza@algafood.com', '123', utc_timestamp), ('Sebastião', 'sabastian@algafood.com', '123', utc_timestamp);
+insert into usuario (nome, email, senha, data_cadastro) values
+('João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
+('Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
+('José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
+('Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
+('Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
 
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+
+insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
