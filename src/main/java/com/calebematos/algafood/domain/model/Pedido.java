@@ -43,7 +43,7 @@ public class Pedido {
 	private OffsetDateTime dataEntrega;
 
 	@Enumerated(EnumType.STRING)
-	private StatusPedido status;
+	private StatusPedido status = StatusPedido.CRIADO;
 
 	@Embedded
 	private Endereco endereco;
