@@ -110,4 +110,8 @@ public class Restaurante {
 	public boolean removerUsuario(Usuario usuario) {
 		return getUsuarios().remove(usuario);
 	}
+
+	public boolean naoAceitaFormaPagamento(FormaPagamento formaPagamento) {
+		return !this.getFormasPagamento().contains(formaPagamento);
+	}
 }
