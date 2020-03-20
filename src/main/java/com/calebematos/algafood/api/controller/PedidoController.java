@@ -1,6 +1,7 @@
 package com.calebematos.algafood.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -22,6 +23,7 @@ import com.calebematos.algafood.api.assembler.PedidoResumoModelAssembler;
 import com.calebematos.algafood.api.model.PedidoModel;
 import com.calebematos.algafood.api.model.PedidoResumoModel;
 import com.calebematos.algafood.api.model.input.PedidoInput;
+import com.calebematos.algafood.core.data.PageableTranslator;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.model.Pedido;
@@ -52,6 +54,8 @@ public class PedidoController {
 
 	@GetMapping
 	public Page<PedidoResumoModel> pesquisar(@PageableDefault(size = 10) Pageable pageable, PedidoFilter filtro) {
+		pageable = traduzirPageable(pageable);
+		
 		Page<Pedido> pedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
 		
 		List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(pedidos.getContent());
@@ -81,6 +85,21 @@ public class PedidoController {
 		} catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage(), e); 
 		}
+	}
+	
+	private Pageable traduzirPageable(Pageable pageable) {
+		var mapeamento = Map.of(
+				"codigo","codigo",
+				"subtotal","subtotal",
+				"taxaFrete","taxaFrete",
+				"valorTotal","valorTotal",
+				"status","status",
+				"dataCriacao","dataCriacao",
+				"restaurante.nome","restaurante.nome",
+				"cliente.nome","cliente.nome"
+				);
+		
+		return PageableTranslator.translate(pageable, mapeamento);
 	}
 	
 
