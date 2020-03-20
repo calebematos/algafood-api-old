@@ -25,9 +25,17 @@ public class ProdutoService {
 				.orElseThrow(() -> new ProdutoNaoEncontradoException(produtoId));
 	}
 	
-	public List<Produto> listarProdutos(Long restauranteId) {
+	public List<Produto> listarProdutos(Long restauranteId, boolean incluirInativos) {
 		Restaurante restaurante = restauranteService.buscar(restauranteId);
-		return produtoRepository.findByRestaurante(restaurante);
+		List<Produto> produtos = null;
+		
+		if(incluirInativos) {
+			produtos = produtoRepository.findTodosByRestaurante(restaurante);
+		}else {
+			produtos = produtoRepository.findAtivosByRestaurante(restaurante);
+		}
+		
+		return produtos;
 	}
 
 	public Produto buscarPeloRestaurante(Long restauranteId, Long produtoId) {

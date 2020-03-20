@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.assembler.ProdutoInputDisassembler;
@@ -36,8 +37,8 @@ public class RestauranteProdutoController {
 	private ProdutoInputDisassembler produtoInputDisassembler;
 
 	@GetMapping
-	public List<ProdutoModel> listar(@PathVariable Long restauranteId) {
-		return produtoModelAssembler.toCollectionModel(produtoService.listarProdutos(restauranteId));
+	public List<ProdutoModel> listar(@PathVariable Long restauranteId, @RequestParam(required = false) boolean incluirInativos) {
+		return produtoModelAssembler.toCollectionModel(produtoService.listarProdutos(restauranteId, incluirInativos));
 	}
 
 	@GetMapping("/{produtoId}")
