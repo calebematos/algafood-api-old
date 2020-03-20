@@ -26,10 +26,10 @@ import com.calebematos.algafood.api.model.input.PedidoInput;
 import com.calebematos.algafood.core.data.PageableTranslator;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
+import com.calebematos.algafood.domain.filter.PedidoFilter;
 import com.calebematos.algafood.domain.model.Pedido;
 import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.PedidoRepository;
-import com.calebematos.algafood.domain.repository.filter.PedidoFilter;
 import com.calebematos.algafood.domain.service.PedidoService;
 import com.calebematos.algafood.infrastructure.repository.spec.PedidoSpecs;
 
