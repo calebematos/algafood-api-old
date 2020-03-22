@@ -1,4 +1,4 @@
-package com.calebematos.algafood.infrastructure.service;
+package com.calebematos.algafood.infrastructure.service.query;
 
 import java.util.ArrayList;
 import java.util.Date;
