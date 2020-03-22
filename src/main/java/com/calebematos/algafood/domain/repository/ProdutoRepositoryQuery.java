@@ -6,4 +6,5 @@ public interface ProdutoRepositoryQuery {
 
 	FotoProduto save(FotoProduto foto);
 	
+	void delete(FotoProduto foto);
 }

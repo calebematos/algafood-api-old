@@ -24,6 +24,12 @@ public class CatalogoFotoProdutoService {
 	@Transactional
 	private FotoProduto salvar(FotoProduto foto) {
 		
+//		Optional<FotoProduto> fotoExistente = produtoRepository.findFotoById(foto.getProduto().getId());
+//		
+//		if(fotoExistente.isPresent()) {
+//			produtoRepository.delete(fotoExistente);
+//		}
+//		
 		return produtoRepository.save(foto);
 	}
 
