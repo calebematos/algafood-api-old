@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.calebematos.algafood.domain.exception.FotoProdutoNaoEncontradoException;
 import com.calebematos.algafood.domain.model.FotoProduto;
 import com.calebematos.algafood.domain.repository.ProdutoRepository;
 import com.calebematos.algafood.domain.service.FotoStorageService.NovaFoto;
@@ -44,6 +45,12 @@ public class CatalogoFotoProdutoService {
 		fotoStorageService.substituir(nomeFotoExistente, novaFoto);
 		
 		return foto;
+	}
+
+	public FotoProduto buscar(Long restauranteId, Long produtoId) {
+
+		return produtoRepository.findFotoById(restauranteId, produtoId)
+				.orElseThrow(() -> new FotoProdutoNaoEncontradoException(produtoId));
 	}
 
 }
