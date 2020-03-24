@@ -1,16 +1,15 @@
 package com.calebematos.algafood.domain.service;
 
+import java.io.InputStream;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.calebematos.algafood.api.model.input.FotoProdutoInput;
 import com.calebematos.algafood.domain.model.FotoProduto;
-import com.calebematos.algafood.domain.model.Produto;
 import com.calebematos.algafood.domain.repository.ProdutoRepository;
+import com.calebematos.algafood.domain.service.FotoStorageService.NovaFoto;
 
 @Service
 public class CatalogoFotoProdutoService {
@@ -19,34 +18,32 @@ public class CatalogoFotoProdutoService {
 	private ProdutoRepository produtoRepository;
 	
 	@Autowired
-	private ProdutoService produtoService;
+	private FotoStorageService fotoStorageService;
 	
 	@Transactional
-	private FotoProduto salvar(FotoProduto foto) {
+	public FotoProduto salvar(FotoProduto foto, InputStream inputStream) {
 		
-//		Optional<FotoProduto> fotoExistente = produtoRepository.findFotoById(foto.getProduto().getId());
-//		
-//		if(fotoExistente.isPresent()) {
-//			produtoRepository.delete(fotoExistente);
-//		}
-//		
-		return produtoRepository.save(foto);
+		Optional<FotoProduto> fotoExistente = produtoRepository.findFotoById(foto.getProduto().getId());
+		String nomeFotoExistente = null;
+		
+		if(fotoExistente.isPresent()) {
+			nomeFotoExistente = fotoExistente.get().getNomeArquivo();
+			produtoRepository.delete(fotoExistente.get());
+		}
+
+		String novoNomeArquivo = fotoStorageService.gerarNomeArquivo(foto.getNomeArquivo());
+		
+		foto.setNomeArquivo(novoNomeArquivo);
+		foto = produtoRepository.save(foto);
+		
+		NovaFoto novaFoto = NovaFoto.builder()
+				.nomeArquivo(foto.getNomeArquivo())
+				.inputStream(inputStream)
+				.build();
+
+		fotoStorageService.substituir(nomeFotoExistente, novaFoto);
+		
+		return foto;
 	}
 
-	public FotoProduto converterESalvar(Long restauranteId, Long produtoId, FotoProdutoInput fotoProdutoInput) {
-		
-		Produto produto = produtoService.buscarPeloRestaurante(restauranteId, produtoId);
-		
-		MultipartFile arquivo = fotoProdutoInput.getArquivo();
-		
-		FotoProduto foto = new FotoProduto();
-		
-		foto.setProduto(produto);
-		foto.setContentType(arquivo.getContentType());
-		foto.setTamanho(arquivo.getSize());
-		foto.setDescricao(fotoProdutoInput.getDescricao());
-		foto.setNomeArquivo(arquivo.getOriginalFilename());
-		
-		return salvar(foto);
-	}
 }
