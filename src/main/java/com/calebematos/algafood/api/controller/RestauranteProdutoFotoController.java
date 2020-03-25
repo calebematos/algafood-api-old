@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ import com.calebematos.algafood.domain.model.FotoProduto;
 import com.calebematos.algafood.domain.model.Produto;
 import com.calebematos.algafood.domain.service.CatalogoFotoProdutoService;
 import com.calebematos.algafood.domain.service.FotoStorageService;
+import com.calebematos.algafood.domain.service.FotoStorageService.FotoRecuperada;
 import com.calebematos.algafood.domain.service.ProdutoService;
 
 @RestController
@@ -78,7 +80,7 @@ public class RestauranteProdutoFotoController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
+	public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
 		try {
 			FotoProduto foto = catalogoFotoProdutoService.buscar(restauranteId, produtoId);
@@ -88,11 +90,18 @@ public class RestauranteProdutoFotoController {
 			
 			verificarcompativilidademediatype(mediaTypeFoto, mediaTypeAceitas);
 			
-			InputStream inputStream = fotoStorageService.recuperar(foto.getNomeArquivo());
+			FotoRecuperada fotoRecuperada = fotoStorageService.recuperar(foto.getNomeArquivo());
 			
-			return ResponseEntity.ok()
-					.contentType(mediaTypeFoto)
-					.body(new InputStreamResource(inputStream));
+			if(fotoRecuperada.temUrl()) {
+				return ResponseEntity.status(HttpStatus.FOUND)
+						.header(HttpHeaders.LOCATION, fotoRecuperada.getUrl())
+						.build();
+			}else {
+				InputStream inputStream = fotoRecuperada.getInputStream();
+				return ResponseEntity.ok()
+						.contentType(mediaTypeFoto)
+						.body(new InputStreamResource(inputStream));
+			}
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
 		}

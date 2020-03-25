@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import com.amazonaws.regions.Regions;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +18,12 @@ public class StorageProperties {
 
 	private Local local = new Local();
 	private S3 s3 = new S3();
-
+	private TipoStorage tipo = TipoStorage.LOCAL;
+	
+	public enum TipoStorage {
+		LOCAL, S3
+	}
+	
 	@Getter
 	@Setter
 	public class Local {
@@ -26,10 +33,10 @@ public class StorageProperties {
 	@Getter
 	@Setter
 	public class S3 {
-		private String chaveAcesso;
+		private String idChaveAcesso;
 		private String idChaveAcessoSecreta;
 		private String bucket;
-		private String regiao;
+		private Regions regiao;
 		private String diretorioFotos;
 	}
 }

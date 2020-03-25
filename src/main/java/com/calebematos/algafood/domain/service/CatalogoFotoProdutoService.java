@@ -36,9 +36,10 @@ public class CatalogoFotoProdutoService {
 		
 		foto.setNomeArquivo(novoNomeArquivo);
 		foto = produtoRepository.save(foto);
-		
+
 		NovaFoto novaFoto = NovaFoto.builder()
 				.nomeArquivo(foto.getNomeArquivo())
+				.contentType(foto.getContentType())
 				.inputStream(inputStream)
 				.build();
 
