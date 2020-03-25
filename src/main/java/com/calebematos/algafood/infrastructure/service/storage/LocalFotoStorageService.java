@@ -4,17 +4,18 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import com.calebematos.algafood.core.storage.StorageProperties;
 import com.calebematos.algafood.domain.service.FotoStorageService;
 
 @Service
 public class LocalFotoStorageService implements FotoStorageService {
 
-	@Value("${algafood.storage.local.diretorio-fotos}")
-	private Path diretorioForo;
+	@Autowired
+	private StorageProperties storageProperties;
 
 	@Override
 	public InputStream recuperar(String nomeArquivo) {
@@ -50,7 +51,8 @@ public class LocalFotoStorageService implements FotoStorageService {
 	}
 
 	private Path getArquivoPath(String nomeArquivo) {
-		return diretorioForo.resolve(Path.of(nomeArquivo));
+		return storageProperties.getLocal()
+				.getDiretorioFotos().resolve(Path.of(nomeArquivo));
 	}
 
 }
