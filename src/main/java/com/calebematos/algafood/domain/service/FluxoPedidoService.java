@@ -1,14 +1,11 @@
 package com.calebematos.algafood.domain.service;
 
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.calebematos.algafood.domain.model.Pedido;
-import com.calebematos.algafood.domain.service.EnvioEmailService.Mensagem;
+import com.calebematos.algafood.domain.repository.PedidoRepository;
 
 @Service
 public class FluxoPedidoService {
@@ -17,22 +14,14 @@ public class FluxoPedidoService {
 	private PedidoService pedidoService;
 
 	@Autowired
-	private EnvioEmailService envioEmailService;
-
+	private PedidoRepository pedidoRepository;
+	
 	@Transactional
 	public void confirmar(String codigoPedido) {
 		Pedido pedido = pedidoService.buscar(codigoPedido);
 		pedido.confirmar();
-
-		Mensagem mensagem = Mensagem.builder()
-				.assunto(pedido.getRestaurante()
-				.getNome() + " - Pedido confirmado")
-				.corpo("pedido-confirmado.html")
-				.destinatarios(Set.of(pedido.getCliente().getEmail()))
-				.variaveis(Map.of("pedido", pedido))
-				.build();
-
-		envioEmailService.enviar(mensagem);
+		
+		pedidoRepository.save(pedido);
 	}
 
 	@Transactional
