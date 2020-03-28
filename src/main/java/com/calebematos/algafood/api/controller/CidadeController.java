@@ -27,6 +27,9 @@ import com.calebematos.algafood.domain.model.Cidade;
 import com.calebematos.algafood.domain.repository.CidadeRepository;
 import com.calebematos.algafood.domain.service.CidadeService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Cidades")
 @RestController
 @RequestMapping("/cidades")
 public class CidadeController {

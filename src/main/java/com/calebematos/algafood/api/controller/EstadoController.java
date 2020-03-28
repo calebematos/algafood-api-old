@@ -26,6 +26,9 @@ import com.calebematos.algafood.domain.model.Estado;
 import com.calebematos.algafood.domain.repository.EstadoRepository;
 import com.calebematos.algafood.domain.service.EstadoService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Estados")
 @RestController
 @RequestMapping("/estados")
 public class EstadoController {

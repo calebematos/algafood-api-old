@@ -30,6 +30,9 @@ import com.calebematos.algafood.domain.model.Cozinha;
 import com.calebematos.algafood.domain.repository.CozinhaRepository;
 import com.calebematos.algafood.domain.service.CozinhaService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Cozinhas")
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
