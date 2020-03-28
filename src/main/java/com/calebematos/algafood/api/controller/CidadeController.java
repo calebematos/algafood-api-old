@@ -28,6 +28,7 @@ import com.calebematos.algafood.domain.repository.CidadeRepository;
 import com.calebematos.algafood.domain.service.CidadeService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "Cidades")
 @RestController
@@ -46,17 +47,20 @@ public class CidadeController {
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
 	
+	@ApiOperation("Lista todas as cidades")
 	@GetMapping
 	public List<CidadeModel> listar() {
 		return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
 	}
 
+	@ApiOperation("Busca uma cidade por ID")
 	@GetMapping("/{cidadeId}")
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
 		Cidade cidade = cidadeService.buscar(cidadeId);
 		return cidadeModelAssembler.toModel(cidade);
 	}
 
+	@ApiOperation("Cadastra uma cidade")
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
@@ -69,6 +73,7 @@ public class CidadeController {
 		}
 	}
 
+	@ApiOperation("Atualiza uma cidade por ID")
 	@PutMapping("/{cidadeId}")
 	public CidadeModel atualizar(@PathVariable Long cidadeId, @RequestBody @Valid CidadeInput cidadeInput) {
 		Cidade cidadeAtual = cidadeService.buscar(cidadeId);
@@ -82,6 +87,7 @@ public class CidadeController {
 		}
 	}
 
+	@ApiOperation("Exclui uma cidade por ID")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{cidadeId}")
 	public void remover(@PathVariable Long cidadeId) {
