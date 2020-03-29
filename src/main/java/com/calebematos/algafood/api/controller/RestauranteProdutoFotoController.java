@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.calebematos.algafood.api.assembler.FotoProdutoModelAssembler;
 import com.calebematos.algafood.api.model.FotoProdutoModel;
 import com.calebematos.algafood.api.model.input.FotoProdutoInput;
+import com.calebematos.algafood.api.openapi.controller.RestauranteProdutoFotoControllerOpenApi;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.model.FotoProduto;
 import com.calebematos.algafood.domain.model.Produto;
@@ -35,8 +36,8 @@ import com.calebematos.algafood.domain.service.FotoStorageService.FotoRecuperada
 import com.calebematos.algafood.domain.service.ProdutoService;
 
 @RestController
-@RequestMapping("/restaurante/{restauranteId}/produtos/{produtoId}/foto")
-public class RestauranteProdutoFotoController {
+@RequestMapping(path="/restaurante/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteProdutoFotoController implements RestauranteProdutoFotoControllerOpenApi {
 
 	@Autowired
 	private CatalogoFotoProdutoService catalogoFotoProdutoService;
@@ -71,7 +72,7 @@ public class RestauranteProdutoFotoController {
 		return fotoProdutoModelAssembler.toModel(fotoSalva);
 	}
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping
 	public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		
 		FotoProduto foto = catalogoFotoProdutoService.buscar(restauranteId, produtoId);
@@ -79,7 +80,7 @@ public class RestauranteProdutoFotoController {
 		return fotoProdutoModelAssembler.toModel(foto);
 	}
 	
-	@GetMapping
+	@GetMapping(produces = MediaType.ALL_VALUE)
 	public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
 		try {
@@ -109,7 +110,7 @@ public class RestauranteProdutoFotoController {
 	
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void remover(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+	public void excluir(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		catalogoFotoProdutoService.excluir(restauranteId, produtoId);
 	}
 

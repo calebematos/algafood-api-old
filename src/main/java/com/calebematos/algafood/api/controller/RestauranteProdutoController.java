@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +21,13 @@ import com.calebematos.algafood.api.assembler.ProdutoInputDisassembler;
 import com.calebematos.algafood.api.assembler.ProdutoModelAssembler;
 import com.calebematos.algafood.api.model.ProdutoModel;
 import com.calebematos.algafood.api.model.input.ProdutoInput;
+import com.calebematos.algafood.api.openapi.controller.RestauranteProdutoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Produto;
 import com.calebematos.algafood.domain.service.ProdutoService;
 
 @RestController
-@RequestMapping("/restaurante/{restauranteId}/produtos")
-public class RestauranteProdutoController {
+@RequestMapping(path="/restaurante/{restauranteId}/produtos",produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi{
 
 	@Autowired
 	private ProdutoService produtoService;

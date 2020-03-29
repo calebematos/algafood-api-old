@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import com.calebematos.algafood.api.assembler.PedidoResumoModelAssembler;
 import com.calebematos.algafood.api.model.PedidoModel;
 import com.calebematos.algafood.api.model.PedidoResumoModel;
 import com.calebematos.algafood.api.model.input.PedidoInput;
+import com.calebematos.algafood.api.openapi.controller.PedidoControllerOpenApi;
 import com.calebematos.algafood.core.data.PageableTranslator;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
@@ -34,8 +36,8 @@ import com.calebematos.algafood.domain.service.PedidoService;
 import com.calebematos.algafood.infrastructure.repository.spec.PedidoSpecs;
 
 @RestController
-@RequestMapping("/pedidos")
-public class PedidoController {
+@RequestMapping(path="/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
+public class PedidoController implements PedidoControllerOpenApi {
 
 	@Autowired
 	private PedidoRepository pedidoRepository;
@@ -53,7 +55,7 @@ public class PedidoController {
 	private PedidoInputDisassembler pedidoInputDisassembler;
 
 	@GetMapping
-	public Page<PedidoResumoModel> pesquisar(@PageableDefault(size = 10) Pageable pageable, PedidoFilter filtro) {
+	public Page<PedidoResumoModel> pesquisar( PedidoFilter filtro, @PageableDefault(size = 10) Pageable pageable) {
 		pageable = traduzirPageable(pageable);
 		
 		Page<Pedido> pedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
@@ -71,7 +73,8 @@ public class PedidoController {
 	}
 	
 	@PostMapping
-	public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
+	public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {   
+
 		
 		try {
 			Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
@@ -101,6 +104,7 @@ public class PedidoController {
 		
 		return PageableTranslator.translate(pageable, mapeamento);
 	}
+
 	
 
 }

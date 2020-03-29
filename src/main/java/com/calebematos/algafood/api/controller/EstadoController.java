@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import com.calebematos.algafood.api.assembler.EstadoInputDisassembler;
 import com.calebematos.algafood.api.assembler.EstadoModelAssembler;
 import com.calebematos.algafood.api.model.EstadoModel;
 import com.calebematos.algafood.api.model.input.EstadoInput;
+import com.calebematos.algafood.api.openapi.controller.EstadoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Estado;
 import com.calebematos.algafood.domain.repository.EstadoRepository;
 import com.calebematos.algafood.domain.service.EstadoService;
@@ -30,8 +32,8 @@ import io.swagger.annotations.Api;
 
 @Api(tags = "Estados")
 @RestController
-@RequestMapping("/estados")
-public class EstadoController {
+@RequestMapping(path="/estados",  produces = MediaType.APPLICATION_JSON_VALUE)
+public class EstadoController implements EstadoControllerOpenApi {
 
 	@Autowired
 	private EstadoRepository estadoRepository;

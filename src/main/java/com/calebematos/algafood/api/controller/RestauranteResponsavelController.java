@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.assembler.UsuarioModelAssembler;
 import com.calebematos.algafood.api.model.UsuarioModel;
+import com.calebematos.algafood.api.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.service.RestauranteService;
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/responsaveis")
-public class RestauranteResponsavelController {
+@RequestMapping(path="/restaurantes/{restauranteId}/responsaveis", produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteResponsavelController implements RestauranteUsuarioResponsavelControllerOpenApi {
 
 	@Autowired
 	private RestauranteService restauranteService;
@@ -44,4 +46,5 @@ public class RestauranteResponsavelController {
 	public void desassociarUsuario(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
 		restauranteService.desassociarUsuario(restauranteId, usuarioId);
 	}
+
 }

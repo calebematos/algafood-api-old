@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +23,14 @@ import com.calebematos.algafood.api.assembler.GrupoInputDisassembler;
 import com.calebematos.algafood.api.assembler.GrupoModelAssembler;
 import com.calebematos.algafood.api.model.GrupoModel;
 import com.calebematos.algafood.api.model.input.GrupoInput;
+import com.calebematos.algafood.api.openapi.controller.GrupoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Grupo;
 import com.calebematos.algafood.domain.repository.GrupoRepository;
 import com.calebematos.algafood.domain.service.GrupoService;
 
 @RestController
-@RequestMapping("/grupos")
-public class GrupoController {
+@RequestMapping(path = "/grupos", produces = MediaType.APPLICATION_JSON_VALUE)
+public class GrupoController implements GrupoControllerOpenApi {
 
 	@Autowired
 	private GrupoRepository grupoRepository;

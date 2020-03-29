@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -32,6 +33,7 @@ import com.calebematos.algafood.api.assembler.RestauranteInputDisassembler;
 import com.calebematos.algafood.api.assembler.RestauranteModelAssembler;
 import com.calebematos.algafood.api.model.RestauranteModel;
 import com.calebematos.algafood.api.model.input.RestauranteInput;
+import com.calebematos.algafood.api.openapi.controller.RestauranteControllerOpenApi;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.exception.RestauranteNaoEncontradoException;
@@ -43,8 +45,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/restaurantes")
-public class RestauranteController {
+@RequestMapping(path="/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteController implements RestauranteControllerOpenApi{
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
@@ -110,7 +112,7 @@ public class RestauranteController {
 	
 	@PutMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void ativarmultiplos(@RequestBody List<Long> restauranteIds) {
+	public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
 		try {
 			restauranteService.ativar(restauranteIds);
 		} catch (RestauranteNaoEncontradoException e) {
@@ -120,7 +122,7 @@ public class RestauranteController {
 	
 	@DeleteMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void inativarmultiplos(@RequestBody List<Long> restauranteIds) {
+	public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
 		try {
 			restauranteService.inativar(restauranteIds);
 		} catch (RestauranteNaoEncontradoException e) {
