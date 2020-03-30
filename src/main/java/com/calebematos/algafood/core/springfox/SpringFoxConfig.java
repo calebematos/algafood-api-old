@@ -1,4 +1,4 @@
-package com.calebematos.algafood.core.openapi;
+package com.calebematos.algafood.core.springfox;
 
 import java.util.Arrays;
 import java.util.List;
