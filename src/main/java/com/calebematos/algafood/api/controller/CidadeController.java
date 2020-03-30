@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calebematos.algafood.api.ResourceUriHelper;
 import com.calebematos.algafood.api.assembler.CidadeInputDisassembler;
 import com.calebematos.algafood.api.assembler.CidadeModelAssembler;
 import com.calebematos.algafood.api.model.CidadeModel;
@@ -62,6 +63,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 		try {
 			Cidade cidade = cidadeInputDisassembler.toDomainObject(cidadeInput);
 			cidade = cidadeService.salvar(cidade);
+			ResourceUriHelper.addUriInResponseHeader(cidade.getId());
 			return cidadeModelAssembler.toModel(cidade);
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
