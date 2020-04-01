@@ -1,6 +1,7 @@
 package com.calebematos.algafood.api.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 
@@ -58,9 +59,9 @@ public class CidadeController implements CidadeControllerOpenApi {
 		Cidade cidade = cidadeService.buscar(cidadeId);
 		CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
 		
-		cidadeModel.add(linkTo(CidadeController.class).slash(cidadeModel.getId()).withSelfRel());
-		cidadeModel.add(linkTo(CidadeController.class).withRel("cidades"));
-		cidadeModel.getEstado().add(linkTo(EstadoController.class).slash(cidadeModel.getEstado().getId()).withSelfRel());
+		cidadeModel.add(linkTo(methodOn(CidadeController.class).buscar(cidadeModel.getId())).withSelfRel());
+		cidadeModel.add(linkTo(methodOn(CidadeController.class).listar()).withRel("cidades"));
+		cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class).buscar(cidadeModel.getEstado().getId())).withSelfRel());
 		
 		return cidadeModel;
 	}
