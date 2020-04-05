@@ -1,8 +1,5 @@
 package com.calebematos.algafood.api.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -53,30 +50,13 @@ public class CidadeController implements CidadeControllerOpenApi {
 	@GetMapping
 	public CollectionModel<CidadeModel> listar() {
 		List<Cidade> todasCidades = cidadeRepository.findAll();
-		List<CidadeModel> cidadesModel = cidadeModelAssembler.toCollectionModel(todasCidades);
-		
-		cidadesModel.forEach(cidadeModel -> {
-			cidadeModel.add(linkTo(methodOn(CidadeController.class).buscar(cidadeModel.getId())).withSelfRel());
-			cidadeModel.add(linkTo(methodOn(CidadeController.class).listar()).withRel("cidades"));
-			cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class).buscar(cidadeModel.getEstado().getId())).withSelfRel());
-		});
-		
-		CollectionModel<CidadeModel> cidadesCollectionModel = new CollectionModel<>(cidadesModel);
-		cidadesCollectionModel.add(linkTo(CidadeController.class).withSelfRel());
-		
-		return cidadesCollectionModel;
+		return cidadeModelAssembler.toCollectionModel(todasCidades);
 	}
 
 	@GetMapping("/{cidadeId}")
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
 		Cidade cidade = cidadeService.buscar(cidadeId);
-		CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
-		
-		cidadeModel.add(linkTo(methodOn(CidadeController.class).buscar(cidadeModel.getId())).withSelfRel());
-		cidadeModel.add(linkTo(methodOn(CidadeController.class).listar()).withRel("cidades"));
-		cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class).buscar(cidadeModel.getEstado().getId())).withSelfRel());
-		
-		return cidadeModel;
+		return cidadeModelAssembler.toModel(cidade);
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
