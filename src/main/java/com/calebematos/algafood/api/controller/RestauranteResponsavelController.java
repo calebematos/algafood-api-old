@@ -1,8 +1,10 @@
 package com.calebematos.algafood.api.controller;
 
-import java.util.List;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,9 +32,11 @@ public class RestauranteResponsavelController implements RestauranteUsuarioRespo
 	private UsuarioModelAssembler usuarioModelAssembler;
 	
 	@GetMapping
-	public List<UsuarioModel> buscar(@PathVariable Long restauranteId) {
+	public CollectionModel<UsuarioModel> buscar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = restauranteService.buscar(restauranteId);
-		return usuarioModelAssembler.toCollectionModel(restaurante.getUsuarios());
+		return usuarioModelAssembler.toCollectionModel(restaurante.getUsuarios())
+				.removeLinks()
+				.add(linkTo(methodOn(RestauranteResponsavelController.class).buscar(restauranteId)).withSelfRel());
 	}
 	
 	@PutMapping("/{usuarioId}")

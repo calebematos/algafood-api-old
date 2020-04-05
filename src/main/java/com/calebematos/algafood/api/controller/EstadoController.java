@@ -1,11 +1,10 @@
 package com.calebematos.algafood.api.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +43,11 @@ public class EstadoController implements EstadoControllerOpenApi {
 	@Autowired
 	private EstadoModelAssembler estadoModelAssembler;
 	
+	@Autowired
 	private EstadoInputDisassembler estadoInputDisassembler;
 
 	@GetMapping
-	public List<EstadoModel> listar() {
+	public CollectionModel<EstadoModel> listar() {
 		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
 	}
 
