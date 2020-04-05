@@ -2,6 +2,7 @@ package com.calebematos.algafood.api.openapi.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
 import com.calebematos.algafood.api.model.PedidoModel;
@@ -19,7 +20,7 @@ import io.swagger.annotations.ApiResponses;
 public interface PedidoControllerOpenApi {
 
 	    @ApiOperation("Pesquisa os pedidos")
-	    Page<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable pageable);
+	    PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro, Pageable pageable);
 	    
 	    @ApiOperation("Registra um pedido")
 	    @ApiResponses({
