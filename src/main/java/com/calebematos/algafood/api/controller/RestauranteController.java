@@ -46,7 +46,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(path="/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestauranteController implements RestauranteControllerOpenApi{
+public class RestauranteController implements RestauranteControllerOpenApi, ControllerPadrao<RestauranteModel>{
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;

@@ -1,8 +1,5 @@
 package com.calebematos.algafood.api.controller;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calebematos.algafood.api.AlgaLinks;
 import com.calebematos.algafood.api.assembler.UsuarioModelAssembler;
 import com.calebematos.algafood.api.model.UsuarioModel;
 import com.calebematos.algafood.api.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
@@ -31,12 +29,15 @@ public class RestauranteResponsavelController implements RestauranteUsuarioRespo
 	@Autowired
 	private UsuarioModelAssembler usuarioModelAssembler;
 	
+	@Autowired
+	private AlgaLinks algaLinks;
+	
 	@GetMapping
 	public CollectionModel<UsuarioModel> buscar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = restauranteService.buscar(restauranteId);
 		return usuarioModelAssembler.toCollectionModel(restaurante.getUsuarios())
 				.removeLinks()
-				.add(linkTo(methodOn(RestauranteResponsavelController.class).buscar(restauranteId)).withSelfRel());
+				.add(algaLinks.linkToResponsaveisRestaurante(restauranteId));
 	}
 	
 	@PutMapping("/{usuarioId}")

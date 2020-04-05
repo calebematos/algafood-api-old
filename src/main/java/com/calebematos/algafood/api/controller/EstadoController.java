@@ -32,7 +32,7 @@ import io.swagger.annotations.Api;
 @Api(tags = "Estados")
 @RestController
 @RequestMapping(path="/estados",  produces = MediaType.APPLICATION_JSON_VALUE)
-public class EstadoController implements EstadoControllerOpenApi {
+public class EstadoController implements EstadoControllerOpenApi, ControllerPadrao<EstadoModel> {
 
 	@Autowired
 	private EstadoRepository estadoRepository;

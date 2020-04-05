@@ -35,7 +35,7 @@ import com.calebematos.algafood.domain.service.FormaPagamentoService;
 
 @RestController
 @RequestMapping(path="/formas-pagamento",  produces = MediaType.APPLICATION_JSON_VALUE)
-public class FormaPagamentoController implements FormaPagamentoControllerOpenApi{
+public class FormaPagamentoController implements FormaPagamentoControllerOpenApi {
 
 	@Autowired
 	private FormaPagamentoRepository formaPagamentoRepository;
@@ -121,4 +121,5 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 	public void remover(@PathVariable Long formaPagamentoId) {
 		formaPagamentoService.excluir(formaPagamentoId);
 	}
+
 }

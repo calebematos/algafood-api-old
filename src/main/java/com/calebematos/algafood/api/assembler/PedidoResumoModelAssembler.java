@@ -1,13 +1,11 @@
 package com.calebematos.algafood.api.assembler;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.calebematos.algafood.api.AlgaLinks;
 import com.calebematos.algafood.api.controller.PedidoController;
 import com.calebematos.algafood.api.controller.RestauranteController;
 import com.calebematos.algafood.api.controller.UsuarioController;
@@ -20,6 +18,9 @@ public class PedidoResumoModelAssembler extends RepresentationModelAssemblerSupp
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private AlgaLinks algaLinks;
+
 	public PedidoResumoModelAssembler() {
 		super(PedidoController.class, PedidoResumoModel.class);
 	}
@@ -28,14 +29,14 @@ public class PedidoResumoModelAssembler extends RepresentationModelAssemblerSupp
 		PedidoResumoModel pedidoResumoModel = createModelWithId(pedido.getId(), pedido);
 		modelMapper.map(pedido, pedidoResumoModel);
 
-		pedidoResumoModel.add(linkTo(PedidoController.class).withRel("pedidos"));
+		pedidoResumoModel.add(algaLinks.linkToListar(PedidoController.class, "pedidos"));
 
-		pedidoResumoModel.getCliente().add(
-				linkTo(methodOn(UsuarioController.class).buscar(pedidoResumoModel.getCliente().getId())).withSelfRel());
-		
-		pedidoResumoModel.getRestaurante().add(
-				linkTo(methodOn(RestauranteController.class).buscar(pedidoResumoModel.getRestaurante().getId())).withSelfRel());
-		
+		pedidoResumoModel.getCliente()
+				.add(algaLinks.linkToBuscar(UsuarioController.class, pedidoResumoModel.getCliente().getId()));
+
+		pedidoResumoModel.getRestaurante()
+				.add(algaLinks.linkToBuscar(RestauranteController.class, pedidoResumoModel.getRestaurante().getId()));
+
 		return pedidoResumoModel;
 	}
 
