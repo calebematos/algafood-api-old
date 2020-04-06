@@ -12,6 +12,7 @@ import org.springframework.hateoas.UriTemplate;
 import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.controller.ControllerPadrao;
+import com.calebematos.algafood.api.controller.FluxoPedidoController;
 import com.calebematos.algafood.api.controller.FormaPagamentoController;
 import com.calebematos.algafood.api.controller.PedidoController;
 import com.calebematos.algafood.api.controller.RestauranteProdutoController;
@@ -38,7 +39,18 @@ public class AlgaLinks {
 
 		return new Link(UriTemplate.of(pedidosUrl, PAGINACAO_VARIABLES.concat(filtroVariables)), "pedidos");
 	}
-
+	
+	public Link linkToConfirmacaoPedido(String codigoPedido, String rel) {
+		return linkTo(methodOn(FluxoPedidoController.class).confirmar(codigoPedido)).withRel(rel);
+	}
+	
+	public Link linkToEntregaPedido(String codigoPedido, String rel) {
+		return linkTo(methodOn(FluxoPedidoController.class).entregar(codigoPedido)).withRel(rel);
+	}
+	
+	public Link linkToCancelamentoPedido(String codigoPedido, String rel) {
+		return linkTo(methodOn(FluxoPedidoController.class).cancelar(codigoPedido)).withRel(rel);
+	}
 	public Link linkToBuscar(Class<? extends ControllerPadrao<?>> controller, Long id) {
 		return linkToBuscar(controller, id, IanaLinkRelations.SELF_VALUE);
 	}
