@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.AlgaLinks;
 import com.calebematos.algafood.api.controller.PedidoController;
-import com.calebematos.algafood.api.controller.RestauranteController;
 import com.calebematos.algafood.api.controller.UsuarioController;
 import com.calebematos.algafood.api.model.PedidoResumoModel;
 import com.calebematos.algafood.domain.model.Pedido;
@@ -34,8 +33,8 @@ public class PedidoResumoModelAssembler extends RepresentationModelAssemblerSupp
 		pedidoResumoModel.getCliente()
 				.add(algaLinks.linkToBuscar(UsuarioController.class, pedidoResumoModel.getCliente().getId()));
 
-		pedidoResumoModel.getRestaurante()
-				.add(algaLinks.linkToBuscar(RestauranteController.class, pedidoResumoModel.getRestaurante().getId()));
+		pedidoResumoModel.getRestaurante().add(
+				algaLinks.linkToRestaurante(pedido.getRestaurante().getId()));
 
 		return pedidoResumoModel;
 	}

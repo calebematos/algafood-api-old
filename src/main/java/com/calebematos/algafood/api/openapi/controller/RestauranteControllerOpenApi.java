@@ -2,13 +2,19 @@ package com.calebematos.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
+import com.calebematos.algafood.api.model.RestauranteApenasNomeModel;
+import com.calebematos.algafood.api.model.RestauranteBasicoModel;
 import com.calebematos.algafood.api.model.RestauranteModel;
 import com.calebematos.algafood.api.model.input.RestauranteInput;
+import com.calebematos.algafood.api.openapi.model.RestauranteBasicoModelOpenApi;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -17,9 +23,15 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "Restaurantes")
 public interface RestauranteControllerOpenApi {
 	
-	@ApiOperation("Pesquisa os restaurantes")
-    public List<RestauranteModel> listar();
+	@ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
+	@ApiImplicitParams({
+	    @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",
+	            name = "projecao", paramType = "query", type = "string")
+	})
+    public CollectionModel<RestauranteBasicoModel> listar();
     
+	@ApiOperation(value = "Lista restaurantes", hidden = true)
+	CollectionModel<RestauranteApenasNomeModel> listarApenasNomes(); 
     
     @ApiOperation("Busca um restaurante por ID")
     @ApiResponses({
@@ -56,7 +68,7 @@ public interface RestauranteControllerOpenApi {
         @ApiResponse(code = 204, message = "Restaurante ativado com sucesso"),
         @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    public void ativarInativar(
+    public ResponseEntity<Void> ativarInativar(
             @ApiParam(value = "ID de um restaurante", example = "1", required = true)
             Long restauranteId, 
             @ApiParam(value = "'true' para ativar e 'false' para inativar", example = "true", required = true)
@@ -67,7 +79,7 @@ public interface RestauranteControllerOpenApi {
         @ApiResponse(code = 204, message = "Restaurante inativado com sucesso"),
         @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    public void ativarMultiplos(
+    public ResponseEntity<Void> ativarMultiplos(
             @ApiParam(name = "corpo", value = "IDs de restaurantes", required = true)
             List<Long> restauranteIds);
     
@@ -75,7 +87,7 @@ public interface RestauranteControllerOpenApi {
     @ApiResponses({
         @ApiResponse(code = 204, message = "Restaurantes ativados com sucesso")
     })
-    public void inativarMultiplos(
+    public ResponseEntity<Void> inativarMultiplos(
             @ApiParam(name = "corpo", value = "IDs de restaurantes", required = true)
             List<Long> restauranteIds);
 
@@ -84,7 +96,7 @@ public interface RestauranteControllerOpenApi {
         @ApiResponse(code = 204, message = "Restaurante aberto com sucesso"),
         @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    public void abrir(
+    public ResponseEntity<Void> abrir(
             @ApiParam(value = "ID de um restaurante", example = "1", required = true)
             Long restauranteId);
     
@@ -93,7 +105,7 @@ public interface RestauranteControllerOpenApi {
         @ApiResponse(code = 204, message = "Restaurante fechado com sucesso"),
         @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    public void fechar(
+    public ResponseEntity<Void> fechar(
             @ApiParam(value = "ID de um restaurante", example = "1", required = true)
             Long restauranteId);
 }
