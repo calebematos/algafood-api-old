@@ -1,6 +1,6 @@
 package com.calebematos.algafood.api.openapi.controller;
 
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
 import com.calebematos.algafood.api.model.GrupoModel;
@@ -18,7 +18,7 @@ public interface UsuarioGrupoControllerOpenApi {
     @ApiResponses({
         @ApiResponse(code = 404, message = "Usuário não encontrado", response = Problem.class)
     })
-    List<GrupoModel> buscar(
+    CollectionModel<GrupoModel> buscar(
             @ApiParam(value = "ID do usuário", example = "1", required = true)
             Long usuarioId);
 

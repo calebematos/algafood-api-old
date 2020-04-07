@@ -1,11 +1,10 @@
 package com.calebematos.algafood.api.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +44,7 @@ public class GrupoController implements GrupoControllerOpenApi {
 	private GrupoInputDisassembler grupoInputDisassembler;
 
 	@GetMapping
-	public List<GrupoModel> listar() {
+	public CollectionModel<GrupoModel> listar() {
 		return grupoModelAssembler.toCollectionModel(grupoRepository.findAll());
 	}
 

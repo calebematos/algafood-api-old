@@ -1,7 +1,5 @@
 package com.calebematos.algafood.api.openapi.controller;
 
-import java.util.List;
-
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 
