@@ -17,6 +17,7 @@ import com.calebematos.algafood.api.controller.FluxoPedidoController;
 import com.calebematos.algafood.api.controller.FormaPagamentoController;
 import com.calebematos.algafood.api.controller.PedidoController;
 import com.calebematos.algafood.api.controller.RestauranteController;
+import com.calebematos.algafood.api.controller.RestauranteFormaPagamentoController;
 import com.calebematos.algafood.api.controller.RestauranteProdutoController;
 import com.calebematos.algafood.api.controller.RestauranteResponsavelController;
 import com.calebematos.algafood.api.controller.UsuarioGrupoController;
@@ -99,6 +100,22 @@ public class AlgaLinks {
 	public Link linkToFormaPagamento(Long formaPagamentoId) {
 		return linkToFormaPagamento(formaPagamentoId, IanaLinkRelations.SELF_VALUE);
 	}
+	
+	public Link linkToRestauranteFormasPagamento(Long restauranteId) {
+	    return linkToRestauranteFormasPagamento(restauranteId, IanaLinkRelations.SELF.value());
+	}
+
+	private Link linkToRestauranteFormasPagamento(Long restauranteId, String rel) {
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class).listar(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToFormasPagamento(String rel) {
+	    return linkTo(FormaPagamentoController.class).withRel(rel);
+	}
+
+	public Link linkToFormasPagamento() {
+	    return linkToFormasPagamento(IanaLinkRelations.SELF.value());
+	}  
 
 	public Link linkToItemPedido(Long restauranteId, Long produtoId, String rel) {
 		return linkTo(methodOn(RestauranteProdutoController.class).buscar(restauranteId, produtoId)).withSelfRel();

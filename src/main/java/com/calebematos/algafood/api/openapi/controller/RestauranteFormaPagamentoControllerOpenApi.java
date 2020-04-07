@@ -2,6 +2,8 @@ package com.calebematos.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
+
 import com.calebematos.algafood.api.exceptionhandler.Problem;
 import com.calebematos.algafood.api.model.FormaPagamentoModel;
 
@@ -18,7 +20,7 @@ public interface RestauranteFormaPagamentoControllerOpenApi {
     @ApiResponses({
         @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    List<FormaPagamentoModel> listar(
+    CollectionModel<FormaPagamentoModel> listar(
             @ApiParam(value = "ID do restaurante", example = "1", required = true)
             Long restauranteId);
 
