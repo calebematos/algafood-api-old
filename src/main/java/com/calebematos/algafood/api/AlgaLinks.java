@@ -149,6 +149,15 @@ public class AlgaLinks {
 		return linkToCozinha(cozinhaId, IanaLinkRelations.SELF.value());
 	}
 	
+	public Link linkToProdutos(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteProdutoController.class)
+	            .buscar(restauranteId, null)).withRel(rel);
+	}
+
+	public Link linkToProdutos(Long restauranteId) {
+	    return linkToProdutos(restauranteId, IanaLinkRelations.SELF.value());
+	}
+	
 	public Link linkToRestauranteAbertura(Long restauranteId, String rel) {
 	    return linkTo(methodOn(RestauranteController.class)
 	            .abrir(restauranteId)).withRel(rel);
@@ -167,5 +176,35 @@ public class AlgaLinks {
 	public Link linkToRestauranteAtivacao(Long restauranteId, String rel) {
 	    return linkTo(methodOn(RestauranteController.class)
 	            .ativarInativar(restauranteId, true)).withRel(rel);
+	}
+
+	public Link linkToRestauranteFormaPagamentoDesassociacao(Long restauranteId, Long formaPagamentoId, String rel) {
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class).desassociar(restauranteId, formaPagamentoId))
+				.withRel(rel);
+	}
+	
+	public Link linkToRestauranteFormaPagamentoAssociacao(Long restauranteId, String rel) {
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class).associar(restauranteId, null))
+				.withRel(rel);
+	}
+	
+	public Link linkToRestauranteResponsavelDesassociacao(Long restauranteId, Long usuarioId, String rel) {
+
+		return linkTo(methodOn(RestauranteResponsavelController.class).desassociarUsuario(restauranteId, usuarioId))
+				.withRel(rel);
+	}
+
+	public Link linkToRestauranteResponsavelAssociacao(Long restauranteId, String rel) {
+		return linkTo(methodOn(RestauranteResponsavelController.class).associarUsuario(restauranteId, null))
+				.withRel(rel);
+	}
+	
+	public Link linkToRestauranteResponsaveis(Long restauranteId, String rel) {
+		return linkTo(methodOn(RestauranteResponsavelController.class)
+				.buscar(restauranteId)).withRel(rel);
+	}
+	
+	public Link linkToRestauranteResponsaveis(Long restauranteId) {
+		return linkToRestauranteResponsaveis(restauranteId, IanaLinkRelations.SELF.value());
 	}
 }

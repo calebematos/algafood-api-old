@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calebematos.algafood.api.AlgaLinks;
 import com.calebematos.algafood.api.assembler.ProdutoInputDisassembler;
 import com.calebematos.algafood.api.assembler.ProdutoModelAssembler;
 import com.calebematos.algafood.api.model.ProdutoModel;
@@ -37,10 +39,17 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 
 	@Autowired
 	private ProdutoInputDisassembler produtoInputDisassembler;
+	
+	@Autowired
+	private AlgaLinks algaLinks;
+
 
 	@GetMapping
-	public List<ProdutoModel> listar(@PathVariable Long restauranteId, @RequestParam(required = false) boolean incluirInativos) {
-		return produtoModelAssembler.toCollectionModel(produtoService.listarProdutos(restauranteId, incluirInativos));
+	public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId, @RequestParam(required = false) Boolean incluirInativos) {
+		List<Produto> todosProdutos = produtoService.listarProdutos(restauranteId, incluirInativos);
+		
+		 return produtoModelAssembler.toCollectionModel(todosProdutos)
+		            .add(algaLinks.linkToProdutos(restauranteId));
 	}
 
 	@GetMapping("/{produtoId}")
