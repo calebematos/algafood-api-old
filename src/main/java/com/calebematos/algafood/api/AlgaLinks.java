@@ -19,6 +19,7 @@ import com.calebematos.algafood.api.controller.PedidoController;
 import com.calebematos.algafood.api.controller.RestauranteController;
 import com.calebematos.algafood.api.controller.RestauranteFormaPagamentoController;
 import com.calebematos.algafood.api.controller.RestauranteProdutoController;
+import com.calebematos.algafood.api.controller.RestauranteProdutoFotoController;
 import com.calebematos.algafood.api.controller.RestauranteResponsavelController;
 import com.calebematos.algafood.api.controller.UsuarioGrupoController;
 
@@ -206,5 +207,24 @@ public class AlgaLinks {
 	
 	public Link linkToRestauranteResponsaveis(Long restauranteId) {
 		return linkToRestauranteResponsaveis(restauranteId, IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToFotoProduto(Long restauranteId, Long produtoId, String rel) {
+	    return linkTo(methodOn(RestauranteProdutoFotoController.class)
+	            .buscar(restauranteId, produtoId)).withRel(rel);
+	}
+
+	public Link linkToFotoProduto(Long restauranteId, Long produtoId) {
+	    return linkToFotoProduto(restauranteId, produtoId, IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToProduto(Long restauranteId, Long produtoId, String rel) {
+		return linkTo(methodOn(RestauranteProdutoController.class)
+				.buscar(restauranteId, produtoId))
+				.withRel(rel);
+	}
+	
+	public Link linkToProduto(Long restauranteId, Long produtoId) {
+		return linkToProduto(restauranteId, produtoId, IanaLinkRelations.SELF.value());
 	}
 }
