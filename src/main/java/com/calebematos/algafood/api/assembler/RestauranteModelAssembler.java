@@ -47,6 +47,8 @@ public class RestauranteModelAssembler extends RepresentationModelAssemblerSuppo
 			restauranteModel.add(
 					algaLinks.linkToRestauranteFechamento(restaurante.getId(), "fechar"));
 		}
+		
+		 restauranteModel.add(algaLinks.linkToProdutos(restaurante.getId(), "produtos"));
 	       
         restauranteModel.add(algaLinks.linkToListar(RestauranteController.class,"restaurantes"));
         
