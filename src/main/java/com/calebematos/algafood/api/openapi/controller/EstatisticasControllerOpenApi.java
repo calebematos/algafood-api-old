@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.calebematos.algafood.api.controller.EstatisticasController.EstatisticasModel;
 import com.calebematos.algafood.domain.filter.VendaDiariaFilter;
 import com.calebematos.algafood.domain.model.dto.VendaDiaria;
 
@@ -35,4 +36,7 @@ public interface EstatisticasControllerOpenApi {
     ResponseEntity<byte[]> consultarVendasDiariasPdf(
             VendaDiariaFilter filtro,
             String timeOffset);
+    
+    @ApiOperation(value = "Estatísticas", hidden = true)
+    EstatisticasModel estatisticas();
 }
