@@ -11,8 +11,11 @@ import org.springframework.hateoas.TemplateVariables;
 import org.springframework.hateoas.UriTemplate;
 import org.springframework.stereotype.Component;
 
+import com.calebematos.algafood.api.controller.CidadeController;
 import com.calebematos.algafood.api.controller.ControllerPadrao;
 import com.calebematos.algafood.api.controller.CozinhaController;
+import com.calebematos.algafood.api.controller.EstadoController;
+import com.calebematos.algafood.api.controller.EstatisticasController;
 import com.calebematos.algafood.api.controller.FluxoPedidoController;
 import com.calebematos.algafood.api.controller.FormaPagamentoController;
 import com.calebematos.algafood.api.controller.GrupoController;
@@ -24,6 +27,7 @@ import com.calebematos.algafood.api.controller.RestauranteFormaPagamentoControll
 import com.calebematos.algafood.api.controller.RestauranteProdutoController;
 import com.calebematos.algafood.api.controller.RestauranteProdutoFotoController;
 import com.calebematos.algafood.api.controller.RestauranteResponsavelController;
+import com.calebematos.algafood.api.controller.UsuarioController;
 import com.calebematos.algafood.api.controller.UsuarioGrupoController;
 
 @Component
@@ -49,6 +53,38 @@ public class AlgaLinks {
 		return new Link(UriTemplate.of(pedidosUrl, PAGINACAO_VARIABLES.concat(filtroVariables)), rel);
 	}
 
+	public Link linkToCozinhas(String rel) {
+		return linkTo(CozinhaController.class).withRel(rel);
+	}
+	
+	public Link linkToCozinhas() {
+		return linkToCozinhas(IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToUsuarios(String rel) {
+		return linkTo(UsuarioController.class).withRel(rel);
+	}
+	
+	public Link linkToUsuarios() {
+		return linkToUsuarios(IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToEstados(String rel) {
+		return linkTo(EstadoController.class).withRel(rel);
+	}
+	
+	public Link linkToEstados() {
+		return linkToEstados(IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToCidades(String rel) {
+		return linkTo(CidadeController.class).withRel(rel);
+	}
+	
+	public Link linkToCidades() {
+		return linkToCidades(IanaLinkRelations.SELF.value());
+	}
+	
 	public Link linkToConfirmacaoPedido(String codigoPedido, String rel) {
 		return linkTo(methodOn(FluxoPedidoController.class).confirmar(codigoPedido)).withRel(rel);
 	}
@@ -252,4 +288,31 @@ public class AlgaLinks {
 		 return linkTo(methodOn(GrupoPermissaoController.class)
 		            .desassociar(grupoId, permissaoId)).withRel(rel);
 	}
+	
+	public Link linkToUsuarioGrupoAssociacao(Long usuarioId, String rel) {
+	    return linkTo(methodOn(UsuarioGrupoController.class)
+	            .associar(usuarioId, null)).withRel(rel);
+	}
+
+	public Link linkToUsuarioGrupoDesassociacao(Long usuarioId, Long grupoId, String rel) {
+	    return linkTo(methodOn(UsuarioGrupoController.class)
+	            .desassociar(usuarioId, grupoId)).withRel(rel);
+	} 
+	
+	public Link linkToEstatisticas(String rel) {
+	    return linkTo(EstatisticasController.class).withRel(rel);
+	}
+
+	public Link linkToEstatisticasVendasDiarias(String rel) {
+	    TemplateVariables filtroVariables = new TemplateVariables(
+	            new TemplateVariable("restauranteId", VariableType.REQUEST_PARAM),
+	            new TemplateVariable("dataCriacaoInicio", VariableType.REQUEST_PARAM),
+	            new TemplateVariable("dataCriacaoFim", VariableType.REQUEST_PARAM),
+	            new TemplateVariable("timeOffset", VariableType.REQUEST_PARAM));
+	    
+	    String pedidosUrl = linkTo(methodOn(EstatisticasController.class)
+	            .consultarVendasDiarias(null, null)).toUri().toString();
+	    
+	    return new Link(UriTemplate.of(pedidosUrl, filtroVariables), rel);
+	} 
 }
