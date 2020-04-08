@@ -8,8 +8,8 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.controller.CozinhaController;
+import com.calebematos.algafood.api.v1.model.CozinhaModel;
 import com.calebematos.algafood.domain.model.Cozinha;
-import com.calebematos.algafood.v1.api.model.CozinhaModel;
 
 @Component
 public class CozinhaModelAssembler extends RepresentationModelAssemblerSupport<Cozinha, CozinhaModel>{

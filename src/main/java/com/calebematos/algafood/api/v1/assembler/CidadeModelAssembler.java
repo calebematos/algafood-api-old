@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.CidadeController;
 import com.calebematos.algafood.api.v1.controller.EstadoController;
+import com.calebematos.algafood.api.v1.model.CidadeModel;
 import com.calebematos.algafood.domain.model.Cidade;
-import com.calebematos.algafood.v1.api.model.CidadeModel;
 
 @Component
 public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Cidade, CidadeModel>{

@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.assembler.EstadoInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.EstadoModelAssembler;
+import com.calebematos.algafood.api.v1.model.EstadoModel;
 import com.calebematos.algafood.api.v1.model.input.EstadoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.EstadoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Estado;
 import com.calebematos.algafood.domain.repository.EstadoRepository;
 import com.calebematos.algafood.domain.service.EstadoService;
-import com.calebematos.algafood.v1.api.model.EstadoModel;
 
 import io.swagger.annotations.Api;
 

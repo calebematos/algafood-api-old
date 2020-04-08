@@ -1,6 +1,6 @@
 package com.calebematos.algafood.api.v1.openapi.model;
 
-import com.calebematos.algafood.v1.api.model.PedidoResumoModel;
+import com.calebematos.algafood.api.v1.model.PedidoResumoModel;
 
 import io.swagger.annotations.ApiModel;
 

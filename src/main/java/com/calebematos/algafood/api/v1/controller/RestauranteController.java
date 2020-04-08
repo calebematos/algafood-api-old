@@ -34,6 +34,9 @@ import com.calebematos.algafood.api.v1.assembler.RestauranteApenasNomeModelAssem
 import com.calebematos.algafood.api.v1.assembler.RestauranteBasicoModelAssembler;
 import com.calebematos.algafood.api.v1.assembler.RestauranteInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.RestauranteModelAssembler;
+import com.calebematos.algafood.api.v1.model.RestauranteApenasNomeModel;
+import com.calebematos.algafood.api.v1.model.RestauranteBasicoModel;
+import com.calebematos.algafood.api.v1.model.RestauranteModel;
 import com.calebematos.algafood.api.v1.model.input.RestauranteInput;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteControllerOpenApi;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
@@ -43,9 +46,6 @@ import com.calebematos.algafood.domain.exception.ValidacaoException;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
 import com.calebematos.algafood.domain.service.RestauranteService;
-import com.calebematos.algafood.v1.api.model.RestauranteApenasNomeModel;
-import com.calebematos.algafood.v1.api.model.RestauranteBasicoModel;
-import com.calebematos.algafood.v1.api.model.RestauranteModel;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

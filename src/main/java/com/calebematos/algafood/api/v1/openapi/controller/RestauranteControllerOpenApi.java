@@ -6,10 +6,10 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
+import com.calebematos.algafood.api.v1.model.RestauranteApenasNomeModel;
+import com.calebematos.algafood.api.v1.model.RestauranteBasicoModel;
+import com.calebematos.algafood.api.v1.model.RestauranteModel;
 import com.calebematos.algafood.api.v1.model.input.RestauranteInput;
-import com.calebematos.algafood.v1.api.model.RestauranteApenasNomeModel;
-import com.calebematos.algafood.v1.api.model.RestauranteBasicoModel;
-import com.calebematos.algafood.v1.api.model.RestauranteModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

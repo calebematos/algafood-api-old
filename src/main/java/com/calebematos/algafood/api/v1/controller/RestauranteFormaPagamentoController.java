@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.assembler.FormaPagamentoModelAssembler;
+import com.calebematos.algafood.api.v1.model.FormaPagamentoModel;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteFormaPagamentoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.service.RestauranteService;
-import com.calebematos.algafood.v1.api.model.FormaPagamentoModel;
 
 @RestController
 @RequestMapping(path="/v1/restaurantes/{restauranteId}/formas-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)

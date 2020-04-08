@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.assembler.UsuarioModelAssembler;
+import com.calebematos.algafood.api.v1.model.UsuarioModel;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.service.RestauranteService;
-import com.calebematos.algafood.v1.api.model.UsuarioModel;
 
 @RestController
 @RequestMapping(path="/v1/restaurantes/{restauranteId}/responsaveis", produces = MediaType.APPLICATION_JSON_VALUE)

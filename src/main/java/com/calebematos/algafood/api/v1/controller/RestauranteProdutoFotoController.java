@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.calebematos.algafood.api.v1.assembler.FotoProdutoModelAssembler;
+import com.calebematos.algafood.api.v1.model.FotoProdutoModel;
 import com.calebematos.algafood.api.v1.model.input.FotoProdutoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteProdutoFotoControllerOpenApi;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
@@ -33,7 +34,6 @@ import com.calebematos.algafood.domain.service.CatalogoFotoProdutoService;
 import com.calebematos.algafood.domain.service.FotoStorageService;
 import com.calebematos.algafood.domain.service.FotoStorageService.FotoRecuperada;
 import com.calebematos.algafood.domain.service.ProdutoService;
-import com.calebematos.algafood.v1.api.model.FotoProdutoModel;
 
 @RestController
 @RequestMapping(path="/v1/restaurante/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)

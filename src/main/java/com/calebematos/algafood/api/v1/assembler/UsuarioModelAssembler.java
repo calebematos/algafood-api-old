@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.UsuarioController;
+import com.calebematos.algafood.api.v1.model.UsuarioModel;
 import com.calebematos.algafood.domain.model.Usuario;
-import com.calebematos.algafood.v1.api.model.UsuarioModel;
 
 @Component
 public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<Usuario, UsuarioModel> {

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.assembler.PermissaoModelAssembler;
+import com.calebematos.algafood.api.v1.model.PermissaoModel;
 import com.calebematos.algafood.api.v1.openapi.controller.PermissaoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Permissao;
 import com.calebematos.algafood.domain.repository.PermissaoRepository;
-import com.calebematos.algafood.v1.api.model.PermissaoModel;
 
 @RestController
 @RequestMapping(path = "/v1/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)

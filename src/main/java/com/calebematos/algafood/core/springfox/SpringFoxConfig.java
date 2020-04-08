@@ -18,6 +18,16 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
+import com.calebematos.algafood.api.v1.model.CidadeModel;
+import com.calebematos.algafood.api.v1.model.CozinhaModel;
+import com.calebematos.algafood.api.v1.model.EstadoModel;
+import com.calebematos.algafood.api.v1.model.FormaPagamentoModel;
+import com.calebematos.algafood.api.v1.model.GrupoModel;
+import com.calebematos.algafood.api.v1.model.PedidoResumoModel;
+import com.calebematos.algafood.api.v1.model.PermissaoModel;
+import com.calebematos.algafood.api.v1.model.ProdutoModel;
+import com.calebematos.algafood.api.v1.model.RestauranteBasicoModel;
+import com.calebematos.algafood.api.v1.model.UsuarioModel;
 import com.calebematos.algafood.api.v1.openapi.model.CidadesModelOpenApi;
 import com.calebematos.algafood.api.v1.openapi.model.CozinhasModelOpenApi;
 import com.calebematos.algafood.api.v1.openapi.model.EstadosModelOpenApi;
@@ -31,16 +41,6 @@ import com.calebematos.algafood.api.v1.openapi.model.PermissoesModelOpenApi;
 import com.calebematos.algafood.api.v1.openapi.model.ProdutosModelOpenApi;
 import com.calebematos.algafood.api.v1.openapi.model.RestaurantesBasicoModelOpenApi;
 import com.calebematos.algafood.api.v1.openapi.model.UsuariosModelOpenApi;
-import com.calebematos.algafood.v1.api.model.CidadeModel;
-import com.calebematos.algafood.v1.api.model.CozinhaModel;
-import com.calebematos.algafood.v1.api.model.EstadoModel;
-import com.calebematos.algafood.v1.api.model.FormaPagamentoModel;
-import com.calebematos.algafood.v1.api.model.GrupoModel;
-import com.calebematos.algafood.v1.api.model.PedidoResumoModel;
-import com.calebematos.algafood.v1.api.model.PermissaoModel;
-import com.calebematos.algafood.v1.api.model.ProdutoModel;
-import com.calebematos.algafood.v1.api.model.RestauranteBasicoModel;
-import com.calebematos.algafood.v1.api.model.UsuarioModel;
 import com.fasterxml.classmate.TypeResolver;
 
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;

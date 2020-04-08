@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.EstadoController;
+import com.calebematos.algafood.api.v1.model.EstadoModel;
 import com.calebematos.algafood.domain.model.Estado;
-import com.calebematos.algafood.v1.api.model.EstadoModel;
 
 @Component
 public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Estado, EstadoModel> {

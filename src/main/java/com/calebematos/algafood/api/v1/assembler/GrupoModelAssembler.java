@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.GrupoController;
+import com.calebematos.algafood.api.v1.model.GrupoModel;
 import com.calebematos.algafood.domain.model.Grupo;
-import com.calebematos.algafood.v1.api.model.GrupoModel;
 
 @Component
 public class GrupoModelAssembler extends RepresentationModelAssemblerSupport<Grupo, GrupoModel> {

@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.assembler.PermissaoModelAssembler;
+import com.calebematos.algafood.api.v1.model.PermissaoModel;
 import com.calebematos.algafood.api.v1.openapi.controller.GrupoPermissaoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Grupo;
 import com.calebematos.algafood.domain.service.GrupoService;
-import com.calebematos.algafood.v1.api.model.PermissaoModel;
 
 @RestController
 @RequestMapping(path="/v1/grupos/{grupoId}/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)

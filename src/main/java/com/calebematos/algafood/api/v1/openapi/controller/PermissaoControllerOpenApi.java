@@ -2,7 +2,7 @@ package com.calebematos.algafood.api.v1.openapi.controller;
 
 import org.springframework.hateoas.CollectionModel;
 
-import com.calebematos.algafood.v1.api.model.PermissaoModel;
+import com.calebematos.algafood.api.v1.model.PermissaoModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

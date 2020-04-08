@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.assembler.GrupoInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.GrupoModelAssembler;
+import com.calebematos.algafood.api.v1.model.GrupoModel;
 import com.calebematos.algafood.api.v1.model.input.GrupoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.GrupoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Grupo;
 import com.calebematos.algafood.domain.repository.GrupoRepository;
 import com.calebematos.algafood.domain.service.GrupoService;
-import com.calebematos.algafood.v1.api.model.GrupoModel;
 
 @RestController
 @RequestMapping(path = "/v1/grupos", produces = MediaType.APPLICATION_JSON_VALUE)

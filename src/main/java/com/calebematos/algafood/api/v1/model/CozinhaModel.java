@@ -1,4 +1,4 @@
-package com.calebematos.algafood.v1.api.model;
+package com.calebematos.algafood.api.v1.model;
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
@@ -7,14 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Relation(collectionRelation = "grupos")
+@Relation(collectionRelation = "cozinhas")
 @Getter
 @Setter
-public class GrupoModel extends RepresentationModel<GrupoModel> {
-	
+public class CozinhaModel extends RepresentationModel<CozinhaModel> {
+
 	@ApiModelProperty(example = "1")
 	private Long id;
-
-	@ApiModelProperty(example = "Gerente")
+	
+	@ApiModelProperty(example = "Brasileira")
 	private String nome;
 }

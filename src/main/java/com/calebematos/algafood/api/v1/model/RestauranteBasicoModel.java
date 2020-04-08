@@ -1,4 +1,4 @@
-package com.calebematos.algafood.v1.api.model;
+package com.calebematos.algafood.api.v1.model;
 
 import java.math.BigDecimal;
 

@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.assembler.CozinhaInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.CozinhaModelAssembler;
+import com.calebematos.algafood.api.v1.model.CozinhaModel;
 import com.calebematos.algafood.api.v1.model.input.CozinhaInput;
 import com.calebematos.algafood.api.v1.openapi.controller.CozinhaControllerOpenApi;
 import com.calebematos.algafood.domain.model.Cozinha;
 import com.calebematos.algafood.domain.repository.CozinhaRepository;
 import com.calebematos.algafood.domain.service.CozinhaService;
-import com.calebematos.algafood.v1.api.model.CozinhaModel;
 
 
 @RestController

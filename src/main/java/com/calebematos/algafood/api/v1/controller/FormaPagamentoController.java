@@ -27,12 +27,12 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.calebematos.algafood.api.v1.assembler.FormaPagamentoInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.FormaPagamentoModelAssembler;
+import com.calebematos.algafood.api.v1.model.FormaPagamentoModel;
 import com.calebematos.algafood.api.v1.model.input.FormaPagamentoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.FormaPagamentoControllerOpenApi;
 import com.calebematos.algafood.domain.model.FormaPagamento;
 import com.calebematos.algafood.domain.repository.FormaPagamentoRepository;
 import com.calebematos.algafood.domain.service.FormaPagamentoService;
-import com.calebematos.algafood.v1.api.model.FormaPagamentoModel;
 
 @RestController
 @RequestMapping(path="/v1/formas-pagamento",  produces = MediaType.APPLICATION_JSON_VALUE)

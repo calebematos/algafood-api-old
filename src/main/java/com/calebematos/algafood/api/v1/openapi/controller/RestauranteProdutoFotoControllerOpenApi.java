@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
+import com.calebematos.algafood.api.v1.model.FotoProdutoModel;
 import com.calebematos.algafood.api.v1.model.input.FotoProdutoInput;
-import com.calebematos.algafood.v1.api.model.FotoProdutoModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

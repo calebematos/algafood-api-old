@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.calebematos.algafood.api.v1.assembler.PedidoInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.PedidoModelAssembler;
 import com.calebematos.algafood.api.v1.assembler.PedidoResumoModelAssembler;
+import com.calebematos.algafood.api.v1.model.PedidoModel;
+import com.calebematos.algafood.api.v1.model.PedidoResumoModel;
 import com.calebematos.algafood.api.v1.model.input.PedidoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.calebematos.algafood.core.data.PageWrapper;
@@ -33,8 +35,6 @@ import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.PedidoRepository;
 import com.calebematos.algafood.domain.service.PedidoService;
 import com.calebematos.algafood.infrastructure.repository.spec.PedidoSpecs;
-import com.calebematos.algafood.v1.api.model.PedidoModel;
-import com.calebematos.algafood.v1.api.model.PedidoResumoModel;
 
 @RestController
 @RequestMapping(path="/v1/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)

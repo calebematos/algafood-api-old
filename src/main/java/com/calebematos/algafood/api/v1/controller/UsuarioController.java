@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.assembler.UsuarioInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.UsuarioModelAssembler;
+import com.calebematos.algafood.api.v1.model.UsuarioModel;
 import com.calebematos.algafood.api.v1.model.input.SenhaInput;
 import com.calebematos.algafood.api.v1.model.input.UsuarioInput;
 import com.calebematos.algafood.api.v1.model.input.UsuarioSemSenhaInput;
@@ -27,7 +28,6 @@ import com.calebematos.algafood.api.v1.openapi.controller.UsuarioControllerOpenA
 import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.UsuarioRepository;
 import com.calebematos.algafood.domain.service.UsuarioService;
-import com.calebematos.algafood.v1.api.model.UsuarioModel;
 
 @RestController
 @RequestMapping(path="/v1/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)

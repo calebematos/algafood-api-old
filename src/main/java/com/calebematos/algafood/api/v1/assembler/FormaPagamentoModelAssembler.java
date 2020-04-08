@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.FormaPagamentoController;
+import com.calebematos.algafood.api.v1.model.FormaPagamentoModel;
 import com.calebematos.algafood.domain.model.FormaPagamento;
-import com.calebematos.algafood.v1.api.model.FormaPagamentoModel;
 
 @Component
 public class FormaPagamentoModelAssembler extends RepresentationModelAssemblerSupport<FormaPagamento, FormaPagamentoModel>{

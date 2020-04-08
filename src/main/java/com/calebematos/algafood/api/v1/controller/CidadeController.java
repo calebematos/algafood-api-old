@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.calebematos.algafood.api.ResourceUriHelper;
 import com.calebematos.algafood.api.v1.assembler.CidadeInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.CidadeModelAssembler;
+import com.calebematos.algafood.api.v1.model.CidadeModel;
 import com.calebematos.algafood.api.v1.model.input.CidadeInput;
 import com.calebematos.algafood.api.v1.openapi.controller.CidadeControllerOpenApi;
 import com.calebematos.algafood.domain.exception.EstadoNaoEncontradoException;
@@ -29,7 +30,6 @@ import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.model.Cidade;
 import com.calebematos.algafood.domain.repository.CidadeRepository;
 import com.calebematos.algafood.domain.service.CidadeService;
-import com.calebematos.algafood.v1.api.model.CidadeModel;
 
 @RestController
 @RequestMapping(path = "/v1/cidades", produces = MediaType.APPLICATION_JSON_VALUE)

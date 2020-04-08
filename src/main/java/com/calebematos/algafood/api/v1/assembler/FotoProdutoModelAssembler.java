@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.RestauranteProdutoFotoController;
+import com.calebematos.algafood.api.v1.model.FotoProdutoModel;
 import com.calebematos.algafood.domain.model.FotoProduto;
-import com.calebematos.algafood.v1.api.model.FotoProdutoModel;
 
 @Component
 public class FotoProdutoModelAssembler extends RepresentationModelAssemblerSupport<FotoProduto, FotoProdutoModel>{

@@ -4,10 +4,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
+import com.calebematos.algafood.api.v1.model.PedidoModel;
+import com.calebematos.algafood.api.v1.model.PedidoResumoModel;
 import com.calebematos.algafood.api.v1.model.input.PedidoInput;
 import com.calebematos.algafood.domain.filter.PedidoFilter;
-import com.calebematos.algafood.v1.api.model.PedidoModel;
-import com.calebematos.algafood.v1.api.model.PedidoResumoModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

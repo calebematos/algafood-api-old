@@ -1,4 +1,4 @@
-package com.calebematos.algafood.v1.api.model;
+package com.calebematos.algafood.api.v1.model;
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
@@ -7,15 +7,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Relation(collectionRelation = "formas-pagamento")
+@Relation(collectionRelation = "estados")
 @Getter
 @Setter
-public class FormaPagamentoModel extends RepresentationModel<FormaPagamentoModel>{
-	
+public class EstadoModel extends RepresentationModel<EstadoModel> {
+
 	@ApiModelProperty(example = "1")
 	private Long id;
-	
-	@ApiModelProperty(example = "Cartão de crédito")
-	private String descricao;
+
+	@ApiModelProperty(example = "Minas Gerais", required = true)
+	private String nome;
 
 }

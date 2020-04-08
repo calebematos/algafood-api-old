@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.controller.PedidoController;
 import com.calebematos.algafood.api.v1.controller.UsuarioController;
+import com.calebematos.algafood.api.v1.model.PedidoResumoModel;
 import com.calebematos.algafood.domain.model.Pedido;
-import com.calebematos.algafood.v1.api.model.PedidoResumoModel;
 
 @Component
 public class PedidoResumoModelAssembler extends RepresentationModelAssemblerSupport<Pedido, PedidoResumoModel> {

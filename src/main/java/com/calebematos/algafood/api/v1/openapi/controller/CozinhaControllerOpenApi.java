@@ -5,8 +5,8 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 
 import com.calebematos.algafood.api.exceptionhandler.Problem;
+import com.calebematos.algafood.api.v1.model.CozinhaModel;
 import com.calebematos.algafood.api.v1.model.input.CozinhaInput;
-import com.calebematos.algafood.v1.api.model.CozinhaModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

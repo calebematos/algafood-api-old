@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.assembler.ProdutoInputDisassembler;
 import com.calebematos.algafood.api.v1.assembler.ProdutoModelAssembler;
+import com.calebematos.algafood.api.v1.model.ProdutoModel;
 import com.calebematos.algafood.api.v1.model.input.ProdutoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteProdutoControllerOpenApi;
 import com.calebematos.algafood.domain.model.Produto;
 import com.calebematos.algafood.domain.service.ProdutoService;
-import com.calebematos.algafood.v1.api.model.ProdutoModel;
 
 @RestController
 @RequestMapping(path="/v1/restaurante/{restauranteId}/produtos",produces = MediaType.APPLICATION_JSON_VALUE)

@@ -7,8 +7,8 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
+import com.calebematos.algafood.api.v1.model.PermissaoModel;
 import com.calebematos.algafood.domain.model.Permissao;
-import com.calebematos.algafood.v1.api.model.PermissaoModel;
 
 @Component
 public class PermissaoModelAssembler implements RepresentationModelAssembler<Permissao, PermissaoModel>{
