@@ -10,7 +10,6 @@ import com.calebematos.algafood.api.model.RestauranteApenasNomeModel;
 import com.calebematos.algafood.api.model.RestauranteBasicoModel;
 import com.calebematos.algafood.api.model.RestauranteModel;
 import com.calebematos.algafood.api.model.input.RestauranteInput;
-import com.calebematos.algafood.api.openapi.model.RestauranteBasicoModelOpenApi;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,17 +18,19 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = "Restaurantes")
 public interface RestauranteControllerOpenApi {
 	
-	@ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
+	@ApiOperation(value = "Lista restaurantes")
 	@ApiImplicitParams({
 	    @ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",
 	            name = "projecao", paramType = "query", type = "string")
 	})
     public CollectionModel<RestauranteBasicoModel> listar();
     
+	@ApiIgnore
 	@ApiOperation(value = "Lista restaurantes", hidden = true)
 	CollectionModel<RestauranteApenasNomeModel> listarApenasNomes(); 
     
