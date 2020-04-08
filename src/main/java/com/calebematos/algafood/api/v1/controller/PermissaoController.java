@@ -16,7 +16,7 @@ import com.calebematos.algafood.domain.repository.PermissaoRepository;
 import com.calebematos.algafood.v1.api.model.PermissaoModel;
 
 @RestController
-@RequestMapping(path = "/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PermissaoController implements PermissaoControllerOpenApi {
 
     @Autowired

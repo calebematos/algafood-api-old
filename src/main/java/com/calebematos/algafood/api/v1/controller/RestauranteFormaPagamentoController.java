@@ -21,7 +21,7 @@ import com.calebematos.algafood.domain.service.RestauranteService;
 import com.calebematos.algafood.v1.api.model.FormaPagamentoModel;
 
 @RestController
-@RequestMapping(path="/restaurantes/{restauranteId}/formas-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/restaurantes/{restauranteId}/formas-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteFormaPagamentoController implements RestauranteFormaPagamentoControllerOpenApi {
 
 	@Autowired

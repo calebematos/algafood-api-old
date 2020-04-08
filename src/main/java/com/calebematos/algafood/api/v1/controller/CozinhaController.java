@@ -33,7 +33,7 @@ import com.calebematos.algafood.v1.api.model.CozinhaModel;
 
 
 @RestController
-@RequestMapping(path="/cozinhas",  produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/cozinhas",  produces = MediaType.APPLICATION_JSON_VALUE)
 public class CozinhaController implements CozinhaControllerOpenApi{
 
 	@Autowired

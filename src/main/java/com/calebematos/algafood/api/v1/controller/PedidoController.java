@@ -37,7 +37,7 @@ import com.calebematos.algafood.v1.api.model.PedidoModel;
 import com.calebematos.algafood.v1.api.model.PedidoResumoModel;
 
 @RestController
-@RequestMapping(path="/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PedidoController implements PedidoControllerOpenApi {
 
 	@Autowired

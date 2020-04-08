@@ -20,7 +20,7 @@ import com.calebematos.algafood.domain.service.VendaQueryService;
 import com.calebematos.algafood.domain.service.VendaReportService;
 
 @RestController
-@RequestMapping("/estatisticas")
+@RequestMapping("/v1/estatisticas")
 public class EstatisticasController implements EstatisticasControllerOpenApi{
 
 	@Autowired

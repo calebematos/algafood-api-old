@@ -21,7 +21,7 @@ import com.calebematos.algafood.domain.service.RestauranteService;
 import com.calebematos.algafood.v1.api.model.UsuarioModel;
 
 @RestController
-@RequestMapping(path="/restaurantes/{restauranteId}/responsaveis", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/restaurantes/{restauranteId}/responsaveis", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteResponsavelController implements RestauranteUsuarioResponsavelControllerOpenApi {
 
 	@Autowired

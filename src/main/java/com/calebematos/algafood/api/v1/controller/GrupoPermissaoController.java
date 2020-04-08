@@ -21,7 +21,7 @@ import com.calebematos.algafood.domain.service.GrupoService;
 import com.calebematos.algafood.v1.api.model.PermissaoModel;
 
 @RestController
-@RequestMapping(path="/grupos/{grupoId}/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/grupos/{grupoId}/permissoes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi {
 
 	@Autowired

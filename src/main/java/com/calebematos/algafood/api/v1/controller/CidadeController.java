@@ -32,7 +32,7 @@ import com.calebematos.algafood.domain.service.CidadeService;
 import com.calebematos.algafood.v1.api.model.CidadeModel;
 
 @RestController
-@RequestMapping(path = "/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CidadeController implements CidadeControllerOpenApi, ControllerPadrao<CidadeModel>{
 
 	@Autowired

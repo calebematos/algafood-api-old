@@ -32,11 +32,11 @@ import com.calebematos.algafood.domain.model.Produto;
 import com.calebematos.algafood.domain.service.CatalogoFotoProdutoService;
 import com.calebematos.algafood.domain.service.FotoStorageService;
 import com.calebematos.algafood.domain.service.FotoStorageService.FotoRecuperada;
-import com.calebematos.algafood.v1.api.model.FotoProdutoModel;
 import com.calebematos.algafood.domain.service.ProdutoService;
+import com.calebematos.algafood.v1.api.model.FotoProdutoModel;
 
 @RestController
-@RequestMapping(path="/restaurante/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/restaurante/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoFotoController implements RestauranteProdutoFotoControllerOpenApi {
 
 	@Autowired

@@ -28,7 +28,7 @@ import com.calebematos.algafood.domain.service.ProdutoService;
 import com.calebematos.algafood.v1.api.model.ProdutoModel;
 
 @RestController
-@RequestMapping(path="/restaurante/{restauranteId}/produtos",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/restaurante/{restauranteId}/produtos",produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi{
 
 	@Autowired

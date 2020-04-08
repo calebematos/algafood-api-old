@@ -30,7 +30,7 @@ import com.calebematos.algafood.domain.service.UsuarioService;
 import com.calebematos.algafood.v1.api.model.UsuarioModel;
 
 @RestController
-@RequestMapping(path="/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioController implements UsuarioControllerOpenApi, ControllerPadrao<UsuarioModel> {
 
 	@Autowired
