@@ -31,7 +31,6 @@ import com.calebematos.algafood.domain.model.Cozinha;
 import com.calebematos.algafood.domain.repository.CozinhaRepository;
 import com.calebematos.algafood.domain.service.CozinhaService;
 
-
 @RestController
 @RequestMapping(path="/v1/cozinhas",  produces = MediaType.APPLICATION_JSON_VALUE)
 public class CozinhaController implements CozinhaControllerOpenApi{
