@@ -50,5 +50,8 @@ public class Usuario {
 		return this.grupos.remove(grupo);
 	}
 	
+	public boolean isNovo() {
+	    return getId() == null;
+	}
 	
 }
