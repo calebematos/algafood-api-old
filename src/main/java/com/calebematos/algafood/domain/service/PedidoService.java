@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.calebematos.algafood.core.security.SecurityHelper;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.exception.PedidoNaoEncontradoException;
 import com.calebematos.algafood.domain.model.Cidade;
@@ -35,6 +36,9 @@ public class PedidoService {
 	@Autowired
 	private ProdutoService produtoService;
 	
+	@Autowired
+	private SecurityHelper securityHelper;
+	
 	public Pedido buscar(String codigoPedido) {
 		return pedidoRepository.findByCodigo(codigoPedido)
 				.orElseThrow(() -> new PedidoNaoEncontradoException(codigoPedido));
@@ -42,6 +46,7 @@ public class PedidoService {
 	
 	@Transactional
 	public Pedido emitir(Pedido pedido) {
+		adicionarUsuarioAoPedido(pedido);
 		validarPedido(pedido);
 		validarItens(pedido);
 		pedido.setTaxaFrete(pedido.getRestaurante().getTaxaFrete());
@@ -50,6 +55,13 @@ public class PedidoService {
 		return pedidoRepository.save(pedido);
 	}
 	
+	private void adicionarUsuarioAoPedido(Pedido pedido) {
+
+		pedido.setCliente(new Usuario());
+		pedido.getCliente().setId(securityHelper.getUsuarioId());
+		
+	}
+
 	private void validarPedido(Pedido pedido) {
 		Cidade cidade = cidadeService.buscar(pedido.getEndereco().getCidade().getId());
 		Usuario cliente = usuarioService.buscar(pedido.getCliente().getId());

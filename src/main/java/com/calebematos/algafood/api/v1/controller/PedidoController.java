@@ -31,7 +31,6 @@ import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.filter.PedidoFilter;
 import com.calebematos.algafood.domain.model.Pedido;
-import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.PedidoRepository;
 import com.calebematos.algafood.domain.service.PedidoService;
 import com.calebematos.algafood.infrastructure.repository.spec.PedidoSpecs;
@@ -81,9 +80,6 @@ public class PedidoController implements PedidoControllerOpenApi {
 		
 		try {
 			Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
-			// TODO:pegar usuario logado 
-			novoPedido.setCliente(new Usuario());
-			novoPedido.getCliente().setId(1L);
 			
 			novoPedido = pedidoService.emitir(novoPedido);
 			
