@@ -3,6 +3,7 @@ package com.calebematos.algafood.api.exceptionhandler;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+import java.nio.file.AccessDeniedException;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -108,6 +109,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		return handleValidationInternal(ex,ex.getBindingResult(), headers, status, request);
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<?> handlerEntidadeNaoEncontrada(AccessDeniedException ex, WebRequest request) {
+
+		ProblemType problemType = ProblemType.ACESSO_NEGADO;
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		String detail = ex.getMessage();
+
+		Problem problem = createProblemBuilder(status, problemType, detail)
+				.userMessage("Voce não possui permissão para executar essa operação")
+				.build();
+
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
 	@ExceptionHandler(ValidacaoException.class)
