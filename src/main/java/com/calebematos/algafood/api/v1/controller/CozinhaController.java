@@ -27,6 +27,7 @@ import com.calebematos.algafood.api.v1.assembler.CozinhaModelAssembler;
 import com.calebematos.algafood.api.v1.model.CozinhaModel;
 import com.calebematos.algafood.api.v1.model.input.CozinhaInput;
 import com.calebematos.algafood.api.v1.openapi.controller.CozinhaControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.Cozinha;
 import com.calebematos.algafood.domain.repository.CozinhaRepository;
 import com.calebematos.algafood.domain.service.CozinhaService;
@@ -50,6 +51,7 @@ public class CozinhaController implements CozinhaControllerOpenApi{
 	@Autowired
 	private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler;
 
+	@CheckSecurity.Cozinhas.PodeConsultar
 	@GetMapping
 	public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable) {
 		Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
@@ -59,12 +61,14 @@ public class CozinhaController implements CozinhaControllerOpenApi{
 		return cozinhasPagedModel;
 	}
 
+	@CheckSecurity.Cozinhas.PodeConsultar
 	@GetMapping("/{cozinhaId}")
 	public CozinhaModel buscar(@PathVariable Long cozinhaId) {
 		Cozinha cozinha = cozinhaService.buscar(cozinhaId);
 		return cozinhaModelAssembler.toModel(cozinha);
 	}
 
+	@CheckSecurity.Cozinhas.PodeEditar
 	@PostMapping
 	public ResponseEntity<CozinhaModel> adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
 		Cozinha cozinha = cozinhaInputDisassembler.toDomainObject(cozinhaInput);
@@ -73,6 +77,7 @@ public class CozinhaController implements CozinhaControllerOpenApi{
 		return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaModel);
 	}
 
+	@CheckSecurity.Cozinhas.PodeEditar
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<CozinhaModel> atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid CozinhaInput cozinhaInput) {
 		Cozinha cozinha = cozinhaInputDisassembler.toDomainObject(cozinhaInput);
@@ -84,6 +89,7 @@ public class CozinhaController implements CozinhaControllerOpenApi{
 		return ResponseEntity.ok(cozinhaModel);
 	}
 
+	@CheckSecurity.Cozinhas.PodeEditar
 	@DeleteMapping("/{cozinhaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cozinhaId) {
