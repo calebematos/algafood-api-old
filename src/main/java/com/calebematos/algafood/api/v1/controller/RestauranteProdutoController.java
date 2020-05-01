@@ -24,6 +24,7 @@ import com.calebematos.algafood.api.v1.assembler.ProdutoModelAssembler;
 import com.calebematos.algafood.api.v1.model.ProdutoModel;
 import com.calebematos.algafood.api.v1.model.input.ProdutoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteProdutoControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.Produto;
 import com.calebematos.algafood.domain.service.ProdutoService;
 
@@ -44,6 +45,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 	private AlgaLinks algaLinks;
 
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public CollectionModel<ProdutoModel> listar(@PathVariable Long restauranteId, @RequestParam(required = false) Boolean incluirInativos) {
 		List<Produto> todosProdutos = produtoService.listarProdutos(restauranteId, incluirInativos);
@@ -52,11 +54,13 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		            .add(algaLinks.linkToProdutos(restauranteId));
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/{produtoId}")
 	public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 		return produtoModelAssembler.toModel(produtoService.buscarPeloRestaurante(restauranteId, produtoId));
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PostMapping
 	public ResponseEntity<ProdutoModel> adicionar(@PathVariable Long restauranteId,
 			@Valid @RequestBody ProdutoInput produtoInput) {
@@ -66,6 +70,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoModelAssembler.toModel(produto));
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{produtoId}")
 	public ResponseEntity<ProdutoModel> atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@Valid @RequestBody ProdutoInput produtoInput) {

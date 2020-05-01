@@ -39,6 +39,7 @@ import com.calebematos.algafood.api.v1.model.RestauranteBasicoModel;
 import com.calebematos.algafood.api.v1.model.RestauranteModel;
 import com.calebematos.algafood.api.v1.model.input.RestauranteInput;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.exception.RestauranteNaoEncontradoException;
@@ -74,6 +75,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
     @GetMapping
     public CollectionModel<RestauranteBasicoModel> listar() {
@@ -81,12 +83,14 @@ public class RestauranteController implements RestauranteControllerOpenApi {
                 .toCollectionModel(restauranteRepository.findAll());
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
 	@GetMapping(params = "projecao=apenas-nome")
 	public CollectionModel<RestauranteApenasNomeModel> listarApenasNomes() {
 		return restauranteApenasNomeModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping("/{restauranteId}")
 	public RestauranteModel buscar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = restauranteService.buscar(restauranteId);
@@ -97,6 +101,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PostMapping
 	public ResponseEntity<RestauranteModel> adicionar(@RequestBody @Valid RestauranteInput restaurante) {
 		try {
@@ -109,6 +114,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{restauranteId}")
 	public ResponseEntity<RestauranteModel> atualizar(@PathVariable Long restauranteId,
 			@RequestBody @Valid RestauranteInput restauranteInput) {
@@ -123,6 +129,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> ativarInativar(@PathVariable Long restauranteId, @RequestBody Boolean ativo) {
@@ -130,6 +137,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> ativarMultiplos(@RequestBody List<Long> restauranteIds) {
@@ -142,6 +150,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@DeleteMapping("/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> inativarMultiplos(@RequestBody List<Long> restauranteIds) {
@@ -153,6 +162,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{restauranteId}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> fechar(@PathVariable Long restauranteId) {
@@ -160,6 +170,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		return ResponseEntity.noContent().build();
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{restauranteId}/abertura")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> abrir(@PathVariable Long restauranteId) {
@@ -167,7 +178,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		return ResponseEntity.noContent().build();
 	}
 	
-
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PatchMapping("/{restauranteId}")
 	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos,
 			HttpServletRequest request) {

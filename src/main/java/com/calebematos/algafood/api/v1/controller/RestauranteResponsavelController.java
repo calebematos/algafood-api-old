@@ -17,6 +17,7 @@ import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.calebematos.algafood.api.v1.model.UsuarioModel;
 import com.calebematos.algafood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.service.RestauranteService;
 
@@ -33,6 +34,7 @@ public class RestauranteResponsavelController implements RestauranteUsuarioRespo
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@GetMapping
 	public CollectionModel<UsuarioModel> buscar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = restauranteService.buscar(restauranteId);
@@ -50,6 +52,7 @@ public class RestauranteResponsavelController implements RestauranteUsuarioRespo
 	    return usuariosModel;
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@PutMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> associarUsuario(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
@@ -58,6 +61,7 @@ public class RestauranteResponsavelController implements RestauranteUsuarioRespo
 		return ResponseEntity.noContent().build();
 	}
 	
+	@CheckSecurity.Restaurantes.PodeEditar
 	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Void> desassociarUsuario(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
