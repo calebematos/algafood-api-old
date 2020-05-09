@@ -25,7 +25,7 @@ public class NotificacaoClientePedidoConfirmadoListener {
 		
 		Mensagem mensagem = Mensagem.builder()
 				.assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-				.corpo("pedido-confirmado.html")
+				.corpo("emails/pedido-confirmado.html")
 				.destinatarios(Set.of(pedido.getCliente().getEmail()))
 				.variaveis(Map.of("pedido", pedido))
 				.build();
