@@ -27,6 +27,7 @@ import com.calebematos.algafood.api.v1.model.input.PedidoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.calebematos.algafood.core.data.PageWrapper;
 import com.calebematos.algafood.core.data.PageableTranslator;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.filter.PedidoFilter;
@@ -57,6 +58,7 @@ public class PedidoController implements PedidoControllerOpenApi {
 	@Autowired
 	private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
 
+	@CheckSecurity.Pedidos.PodePesquisar
 	@GetMapping
 	public PagedModel<PedidoResumoModel> pesquisar( PedidoFilter filtro, @PageableDefault(size = 10) Pageable pageable) {
 		Pageable pageableTraduzido = traduzirPageable(pageable);
@@ -68,6 +70,7 @@ public class PedidoController implements PedidoControllerOpenApi {
 		return pagedResourcesAssembler.toModel(pedidosPage, pedidoResumoModelAssembler);
 	}
 
+	@CheckSecurity.Pedidos.PodeBuscar
 	@GetMapping("/{codigoPedido}")
 	public PedidoModel buscar(@PathVariable String codigoPedido) {
 		Pedido pedido = pedidoService.buscar(codigoPedido);
