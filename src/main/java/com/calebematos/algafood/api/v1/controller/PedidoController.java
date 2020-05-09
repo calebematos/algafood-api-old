@@ -77,9 +77,9 @@ public class PedidoController implements PedidoControllerOpenApi {
 		return pedidoModelAssembler.toModel(pedido);
 	}
 	
+	@CheckSecurity.Pedidos.PodeCriar
 	@PostMapping
 	public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {   
-
 		
 		try {
 			Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);

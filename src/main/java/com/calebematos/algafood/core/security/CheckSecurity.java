@@ -61,6 +61,16 @@ public @interface CheckSecurity {
 		@Target(METHOD)
 		public @interface PodePesquisar {}
 
+		@PreAuthorize("hasAuthority('SCOPE_WRITE') and (hasAuthority('GERENCIAR_PEDIDOS') or "
+				+ "@securityHelper.gerenciaPedido(#codigoPedido))")
+		@Retention(RUNTIME)
+		@Target(METHOD)
+		public @interface PodeGerenciarPedidos {}
+		
+		@PreAuthorize("hasAuthority('SCOPE_WRITE') and isAuthenticated()")
+		@Retention(RUNTIME)
+		@Target(METHOD)
+		public @interface PodeCriar {}
 		
 	}
 }
