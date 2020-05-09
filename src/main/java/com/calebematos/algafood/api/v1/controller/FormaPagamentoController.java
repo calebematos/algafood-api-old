@@ -30,6 +30,7 @@ import com.calebematos.algafood.api.v1.assembler.FormaPagamentoModelAssembler;
 import com.calebematos.algafood.api.v1.model.FormaPagamentoModel;
 import com.calebematos.algafood.api.v1.model.input.FormaPagamentoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.FormaPagamentoControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.FormaPagamento;
 import com.calebematos.algafood.domain.repository.FormaPagamentoRepository;
 import com.calebematos.algafood.domain.service.FormaPagamentoService;
@@ -50,6 +51,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 	@Autowired
 	private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 	
+	@CheckSecurity.FormasPagamento.PodeConsultar
 	@GetMapping
 	public ResponseEntity<CollectionModel<FormaPagamentoModel>> listar(ServletWebRequest request) {
 		ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
@@ -76,6 +78,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 				.body(formasPagamentoModel);
 	}
 	
+	@CheckSecurity.FormasPagamento.PodeConsultar
 	@GetMapping("/{formaPagamentoId}")
 	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId, ServletWebRequest request) {
 
@@ -101,6 +104,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 				.body(formaPagamentoModel);
 	}
 	
+	@CheckSecurity.FormasPagamento.PodeEditar
 	@PostMapping
 	public ResponseEntity<FormaPagamentoModel> adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
 		FormaPagamento formaPagamento = formaPagamentoInputDisassembler.toDomainObject(formaPagamentoInput);
@@ -108,6 +112,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 		return ResponseEntity.status(HttpStatus.CREATED).body(formaPagamentoModelAssembler.toModel(formaPagamento));
 	}
 	
+	@CheckSecurity.FormasPagamento.PodeEditar
 	@PutMapping("/{formaPagamentoId}")
 	public ResponseEntity<FormaPagamentoModel> atualizar(@PathVariable Long formaPagamentoId, @RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
 		FormaPagamento formaPagamento = formaPagamentoInputDisassembler.toDomainObject(formaPagamentoInput);
@@ -117,6 +122,7 @@ public class FormaPagamentoController implements FormaPagamentoControllerOpenApi
 		return ResponseEntity.ok(formaPagamentoModelAssembler.toModel(formaPagamentoAtual));
 	}
 
+	@CheckSecurity.FormasPagamento.PodeEditar
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{formaPagamentoId}")
 	public void remover(@PathVariable Long formaPagamentoId) {
