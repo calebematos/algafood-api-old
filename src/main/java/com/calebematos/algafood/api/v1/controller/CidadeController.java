@@ -25,6 +25,7 @@ import com.calebematos.algafood.api.v1.assembler.CidadeModelAssembler;
 import com.calebematos.algafood.api.v1.model.CidadeModel;
 import com.calebematos.algafood.api.v1.model.input.CidadeInput;
 import com.calebematos.algafood.api.v1.openapi.controller.CidadeControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.calebematos.algafood.domain.exception.NegocioException;
 import com.calebematos.algafood.domain.model.Cidade;
@@ -47,18 +48,21 @@ public class CidadeController implements CidadeControllerOpenApi, ControllerPadr
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
 
+	@CheckSecurity.Cidades.PodeConsultar
 	@GetMapping
 	public CollectionModel<CidadeModel> listar() {
 		List<Cidade> todasCidades = cidadeRepository.findAll();
 		return cidadeModelAssembler.toCollectionModel(todasCidades);
 	}
 
+	@CheckSecurity.Cidades.PodeConsultar
 	@GetMapping("/{cidadeId}")
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
 		Cidade cidade = cidadeService.buscar(cidadeId);
 		return cidadeModelAssembler.toModel(cidade);
 	}
 
+	@CheckSecurity.Cidades.PodeEditar
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
@@ -72,6 +76,7 @@ public class CidadeController implements CidadeControllerOpenApi, ControllerPadr
 		}
 	}
 
+	@CheckSecurity.Cidades.PodeEditar
 	@PutMapping("/{cidadeId}")
 	public CidadeModel atualizar(@PathVariable Long cidadeId, @RequestBody @Valid CidadeInput cidadeInput) {
 		Cidade cidadeAtual = cidadeService.buscar(cidadeId);
@@ -85,6 +90,7 @@ public class CidadeController implements CidadeControllerOpenApi, ControllerPadr
 		}
 	}
 
+	@CheckSecurity.Cidades.PodeEditar
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{cidadeId}")
 	public void remover(@PathVariable Long cidadeId) {

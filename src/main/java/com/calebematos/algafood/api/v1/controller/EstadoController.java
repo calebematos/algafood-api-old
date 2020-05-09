@@ -23,6 +23,7 @@ import com.calebematos.algafood.api.v1.assembler.EstadoModelAssembler;
 import com.calebematos.algafood.api.v1.model.EstadoModel;
 import com.calebematos.algafood.api.v1.model.input.EstadoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.EstadoControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.Estado;
 import com.calebematos.algafood.domain.repository.EstadoRepository;
 import com.calebematos.algafood.domain.service.EstadoService;
@@ -46,17 +47,20 @@ public class EstadoController implements EstadoControllerOpenApi, ControllerPadr
 	@Autowired
 	private EstadoInputDisassembler estadoInputDisassembler;
 
+	@CheckSecurity.Estados.PodeConsultar
 	@GetMapping
 	public CollectionModel<EstadoModel> listar() {
 		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
 	}
 
+	@CheckSecurity.Estados.PodeConsultar
 	@GetMapping("/{estadoId}")
 	public EstadoModel buscar(@PathVariable Long estadoId) {
 		Estado estado = estadoService.buscar(estadoId);
 		return estadoModelAssembler.toModel(estado);
 	}
 
+	@CheckSecurity.Estados.PodeEditar
 	@PostMapping
 	public ResponseEntity<EstadoModel> adicionar(@RequestBody @Valid EstadoInput estadoInput) {
 		Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
@@ -64,6 +68,7 @@ public class EstadoController implements EstadoControllerOpenApi, ControllerPadr
 		return ResponseEntity.status(HttpStatus.CREATED).body(estadoModelAssembler.toModel(estado));
 	}
 
+	@CheckSecurity.Estados.PodeEditar
 	@PutMapping("/{estadoId}")
 	public ResponseEntity<EstadoModel> atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
 		Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
@@ -73,6 +78,7 @@ public class EstadoController implements EstadoControllerOpenApi, ControllerPadr
 		return ResponseEntity.ok(estadoModelAssembler.toModel(estadoAtual));
 	}
 
+	@CheckSecurity.Estados.PodeEditar
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{estadoId}")
 	public void remover(@PathVariable Long estadoId) {
