@@ -39,4 +39,19 @@ public class SecurityHelper {
 	public boolean gerenciaPedido(String codigoPedido) {
 		return pedidoRepository.existsResponsavelPedido(codigoPedido, getUsuarioId());
 	}
+	
+	public boolean usuarioAutenticadoIgual(Long usuarioId) {
+		return getUsuarioId() != null && usuarioId != null
+				&& getUsuarioId().equals(usuarioId);
+	}
+	
+	public boolean podeGerenciarPedidos(String codigoPedido) {
+		
+		return hasAuthority("SCOPE_WRITE") && (hasAuthority("GERENCIAR_PEDIDOS") || gerenciaPedido(codigoPedido));
+	}
+
+	private boolean hasAuthority(String authorityName) {
+		return getAuthentication().getAuthorities().stream()
+					.anyMatch(authority -> authority.getAuthority().equals(authorityName));
+	}
 }

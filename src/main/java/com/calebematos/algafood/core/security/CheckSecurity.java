@@ -48,21 +48,20 @@ public @interface CheckSecurity {
 
 		@PreAuthorize("hasAuthority('SCOPE_READ') and isAuthenticated()")
 		@PostAuthorize("hasAuthority('CONSULTAR_PEDIDOS') or "
-				+ "@securityHelper.getUsuarioId() == returnObject.cliente.id or"
+				+ "@securityHelper.usuarioAutenticadoIgual(returnObject.cliente.id) or"
 				+ "@securityHelper.gerenciaRestaurante(returnObject.restaurante.id)")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeBuscar {}
 
 		@PreAuthorize("hasAuthority('SCOPE_READ') and (hasAuthority('CONSULTAR_PEDIDOS') or "
-				+ "@securityHelper.getUsuarioId() == #filtro.clienteId or"
+				+ "@securityHelper.usuarioAutenticadoIgual(#filtro.clienteId) or"
 				+ "@securityHelper.gerenciaRestaurante(#filtro.restauranteId))")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodePesquisar {}
 
-		@PreAuthorize("hasAuthority('SCOPE_WRITE') and (hasAuthority('GERENCIAR_PEDIDOS') or "
-				+ "@securityHelper.gerenciaPedido(#codigoPedido))")
+		@PreAuthorize("@securityHelper.podeGerenciarPedidos(#codigoPedido)")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeGerenciarPedidos {}
@@ -129,12 +128,12 @@ public @interface CheckSecurity {
 		public @interface PodeEditar {}
 		
 		@PreAuthorize("hasAuthority('SCOPE_WRITE') and (hasAuthority('EDITAR_USUARIOS_GRUPOS_PERMISSOES') or "
-				+ " @securityHelper.getUsuarioId() == #usuarioId)")
+				+ " @securityHelper.usuarioAutenticadoIgual(#usuarioId))")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeAlterarUsuario {}
 		
-		@PreAuthorize("hasAuthority('SCOPE_WRITE') and @securityHelper.getUsuarioId() == #usuarioId")
+		@PreAuthorize("hasAuthority('SCOPE_WRITE') and @securityHelper.usuarioAutenticadoIgual(#usuarioId)")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeAlterarPropriaSenha {}
