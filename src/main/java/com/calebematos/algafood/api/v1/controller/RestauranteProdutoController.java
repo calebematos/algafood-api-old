@@ -60,7 +60,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return produtoModelAssembler.toModel(produtoService.buscarPeloRestaurante(restauranteId, produtoId));
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
 	@PostMapping
 	public ResponseEntity<ProdutoModel> adicionar(@PathVariable Long restauranteId,
 			@Valid @RequestBody ProdutoInput produtoInput) {
@@ -70,7 +70,7 @@ public class RestauranteProdutoController implements RestauranteProdutoControlle
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoModelAssembler.toModel(produto));
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
 	@PutMapping("/{produtoId}")
 	public ResponseEntity<ProdutoModel> atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@Valid @RequestBody ProdutoInput produtoInput) {

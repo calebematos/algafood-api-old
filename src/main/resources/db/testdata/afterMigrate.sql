@@ -6,7 +6,6 @@ delete from estado;
 delete from forma_pagamento;
 delete from grupo;
 delete from grupo_permissao;
-delete from permissao;
 delete from produto;
 delete from restaurante;
 delete from restaurante_forma_pagamento;
@@ -24,7 +23,6 @@ alter table cozinha auto_increment = 1;
 alter table estado auto_increment = 1;
 alter table forma_pagamento auto_increment = 1;
 alter table grupo auto_increment = 1;
-alter table permissao auto_increment = 1;
 alter table produto auto_increment = 1;
 alter table restaurante auto_increment = 1;
 alter table usuario auto_increment = 1;
@@ -55,9 +53,6 @@ insert into forma_pagamento (id, descricao, data_atualizacao) values (1, 'Cartã
 insert into forma_pagamento (id, descricao, data_atualizacao) values (2, 'Cartão de débito', utc_timestamp);
 insert into forma_pagamento (id, descricao, data_atualizacao) values (3, 'Dinheiro', utc_timestamp);
 
-insert into permissao (id, nome, descricao) values (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
-insert into permissao (id, nome, descricao) values (2, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
-
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
 
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Porco com molho agridoce', 'Deliciosa carne suína ao molho especial', 78.90, 0, 1);
@@ -75,10 +70,26 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('San
 
 insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6);
 
-
 insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 
-insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1); 
+# Adiciona todas as permissoes no grupo do gerente
+insert into grupo_permissao (grupo_id, permissao_id)
+select 1, id from permissao;
+
+# Adiciona permissoes no grupo do vendedor
+insert into grupo_permissao (grupo_id, permissao_id)
+select 2, id from permissao where nome like 'CONSULTAR_%';
+
+insert into grupo_permissao (grupo_id, permissao_id)
+select 2, id from permissao where nome = 'EDITAR_RESTAURANTES';
+
+# Adiciona permissoes no grupo do auxiliar
+insert into grupo_permissao (grupo_id, permissao_id)
+select 3, id from permissao where nome like 'CONSULTAR_%';
+
+# Adiciona permissoes no grupo cadastrador
+insert into grupo_permissao (grupo_id, permissao_id)
+select 4, id from permissao where nome like '%_RESTAURANTES';
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '$2a$10$OgQFGs5W8qTkETM.tsrdle5GYEOA2gTK0LaYs0x9K0FpwmrwkcZ1G', utc_timestamp),
@@ -89,7 +100,7 @@ insert into usuario (id, nome, email, senha, data_cadastro) values
 (6, 'Débora Mendonça', 'calebematos+debora@gmail.com', '$2a$10$OgQFGs5W8qTkETM.tsrdle5GYEOA2gTK0LaYs0x9K0FpwmrwkcZ1G', utc_timestamp),
 (7, 'Carlos Lima', 'calebematos+carlos@gmail.com', '$2a$10$OgQFGs5W8qTkETM.tsrdle5GYEOA2gTK0LaYs0x9K0FpwmrwkcZ1G', utc_timestamp);
 
-insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
 
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
 
