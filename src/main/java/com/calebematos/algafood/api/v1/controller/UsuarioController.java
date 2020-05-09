@@ -25,6 +25,7 @@ import com.calebematos.algafood.api.v1.model.input.SenhaInput;
 import com.calebematos.algafood.api.v1.model.input.UsuarioInput;
 import com.calebematos.algafood.api.v1.model.input.UsuarioSemSenhaInput;
 import com.calebematos.algafood.api.v1.openapi.controller.UsuarioControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.Usuario;
 import com.calebematos.algafood.domain.repository.UsuarioRepository;
 import com.calebematos.algafood.domain.service.UsuarioService;
@@ -45,6 +46,7 @@ public class UsuarioController implements UsuarioControllerOpenApi, ControllerPa
 	@Autowired
 	private UsuarioInputDisassembler usuarioInputDisassembler;
 	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@GetMapping
 	public CollectionModel<UsuarioModel> listar(){
 		List<Usuario> todosUsuarios = usuarioRepository.findAll();
@@ -52,6 +54,7 @@ public class UsuarioController implements UsuarioControllerOpenApi, ControllerPa
 		return collectionModel;
 	}
 	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@GetMapping("/{usuarioId}")
 	public UsuarioModel buscar(@PathVariable Long usuarioId) {
 		return usuarioModelAssembler.toModel(usuarioService.buscar(usuarioId));
@@ -64,6 +67,7 @@ public class UsuarioController implements UsuarioControllerOpenApi, ControllerPa
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioModelAssembler.toModel(usuario));
 	}
 	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeAlterarUsuario
 	@PutMapping("/{usuarioId}")
 	public ResponseEntity<UsuarioModel> atualizar(@PathVariable Long usuarioId, @Valid @RequestBody UsuarioSemSenhaInput usuarioInput ){
 		Usuario usuarioAtual =  usuarioService.buscar(usuarioId);
@@ -74,6 +78,7 @@ public class UsuarioController implements UsuarioControllerOpenApi, ControllerPa
 		return ResponseEntity.ok(usuarioModelAssembler.toModel(usuarioAtual));
 	}
 	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeAlterarPropriaSenha
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PutMapping("/{usuarioId}/senha")
 	public void alterarSenha(@PathVariable Long usuarioId, @Valid @RequestBody SenhaInput senhaInput) {

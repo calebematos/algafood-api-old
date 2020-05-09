@@ -23,6 +23,7 @@ import com.calebematos.algafood.api.v1.assembler.GrupoModelAssembler;
 import com.calebematos.algafood.api.v1.model.GrupoModel;
 import com.calebematos.algafood.api.v1.model.input.GrupoInput;
 import com.calebematos.algafood.api.v1.openapi.controller.GrupoControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.model.Grupo;
 import com.calebematos.algafood.domain.repository.GrupoRepository;
 import com.calebematos.algafood.domain.service.GrupoService;
@@ -43,16 +44,19 @@ public class GrupoController implements GrupoControllerOpenApi {
 	@Autowired
 	private GrupoInputDisassembler grupoInputDisassembler;
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@GetMapping
 	public CollectionModel<GrupoModel> listar() {
 		return grupoModelAssembler.toCollectionModel(grupoRepository.findAll());
 	}
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@GetMapping("/{grupoId}")
 	public GrupoModel buscar(@PathVariable Long grupoId) {
 		return grupoModelAssembler.toModel(grupoService.buscar(grupoId));
 	}
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeEditar
 	@PostMapping
 	public ResponseEntity<GrupoModel> adicionar(@Valid @RequestBody GrupoInput grupoInput) {
 		Grupo grupo = grupoInputDisassembler.toDomainObject(grupoInput);
@@ -61,6 +65,7 @@ public class GrupoController implements GrupoControllerOpenApi {
 		return ResponseEntity.status(HttpStatus.CREATED).body(grupoModelAssembler.toModel(grupo));
 	}
 	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeEditar
 	@PutMapping("/{grupoId}")
 	public ResponseEntity<GrupoModel> atualizar(@PathVariable Long grupoId, @Valid @RequestBody GrupoInput grupoInput){
 		Grupo grupoAlterado = grupoInputDisassembler.toDomainObject(grupoInput);
@@ -72,6 +77,7 @@ public class GrupoController implements GrupoControllerOpenApi {
 		return ResponseEntity.ok(grupoModelAssembler.toModel(grupoAtual));
 	}
 	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeEditar
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{grupoId}")
 	public void remover(@PathVariable Long grupoId) {
