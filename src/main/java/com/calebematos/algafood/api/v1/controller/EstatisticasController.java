@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.calebematos.algafood.api.v1.AlgaLinks;
 import com.calebematos.algafood.api.v1.openapi.controller.EstatisticasControllerOpenApi;
+import com.calebematos.algafood.core.security.CheckSecurity;
 import com.calebematos.algafood.domain.filter.VendaDiariaFilter;
 import com.calebematos.algafood.domain.model.dto.VendaDiaria;
 import com.calebematos.algafood.domain.service.VendaQueryService;
@@ -32,12 +33,14 @@ public class EstatisticasController implements EstatisticasControllerOpenApi{
 	@Autowired
 	private AlgaLinks algaLinks;
 	
+	@CheckSecurity.Estatisticas.PodeConsultar
 	@GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro, 
 			@RequestParam(required = false, defaultValue = "+00:00") String timeOffset) {
 		return vendaQueryService.consultarVendasDiarias(filtro, timeOffset);
 	}
 	
+	@CheckSecurity.Estatisticas.PodeConsultar
 	@GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE )
 	public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro, 
 			@RequestParam(required = false, defaultValue = "+00:00") String timeOffset) {
@@ -53,6 +56,7 @@ public class EstatisticasController implements EstatisticasControllerOpenApi{
 				.body(bytesPdf);
 	}
 	
+	@CheckSecurity.Estatisticas.PodeConsultar
 	@Override
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstatisticasModel estatisticas() {
