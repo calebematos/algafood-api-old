@@ -14,105 +14,102 @@ public class SecurityHelper {
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
+
 	@Autowired
 	private PedidoRepository pedidoRepository;
-	
+
 	public Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}
-	
-	
+
 	public Long getUsuarioId() {
 		Jwt jwt = (Jwt) getAuthentication().getPrincipal();
-		
+
 		return jwt.getClaim("usuario_id");
 	}
-	
+
 	public boolean gerenciaRestaurante(Long restauranteId) {
-		if(restauranteId == null) {
+		if (restauranteId == null) {
 			return false;
 		}
 		return restauranteRepository.existsResponsavel(restauranteId, getUsuarioId());
 	}
-	
+
 	public boolean gerenciaPedido(String codigoPedido) {
 		return pedidoRepository.existsResponsavelPedido(codigoPedido, getUsuarioId());
 	}
-	
+
 	public boolean usuarioAutenticadoIgual(Long usuarioId) {
-		return getUsuarioId() != null && usuarioId != null
-				&& getUsuarioId().equals(usuarioId);
+		return getUsuarioId() != null && usuarioId != null && getUsuarioId().equals(usuarioId);
 	}
-	
+
 	public boolean podeGerenciarPedidos(String codigoPedido) {
 		return hasAuthority("SCOPE_WRITE") && (hasAuthority("GERENCIAR_PEDIDOS") || gerenciaPedido(codigoPedido));
 	}
 
 	public boolean isAutenticado() {
-	    return getAuthentication().isAuthenticated();
+		return getAuthentication().isAuthenticated();
 	}
-	
+
 	public boolean temEscopoEscrita() {
-	    return hasAuthority("SCOPE_WRITE");
+		return hasAuthority("SCOPE_WRITE");
 	}
 
 	public boolean temEscopoLeitura() {
-	    return hasAuthority("SCOPE_READ");
+		return hasAuthority("SCOPE_READ");
 	}
-	
+
 	public boolean podeConsultarRestaurantes() {
-	    return temEscopoLeitura() && isAutenticado();
+		return temEscopoLeitura() && isAutenticado();
 	}
 
 	public boolean podeGerenciarCadastroRestaurantes() {
-	    return temEscopoEscrita() && hasAuthority("EDITAR_RESTAURANTES");
+		return temEscopoEscrita() && hasAuthority("EDITAR_RESTAURANTES");
 	}
 
 	public boolean podeGerenciarFuncionamentoRestaurantes(Long restauranteId) {
-	    return temEscopoEscrita() && (hasAuthority("EDITAR_RESTAURANTES")
-	            || gerenciaRestaurante(restauranteId));
+		return temEscopoEscrita() && (hasAuthority("EDITAR_RESTAURANTES") || gerenciaRestaurante(restauranteId));
 	}
 
 	public boolean podeConsultarUsuariosGruposPermissoes() {
-	    return temEscopoLeitura() && hasAuthority("CONSULTAR_USUARIOS_GRUPOS_PERMISSOES");
+		return temEscopoLeitura() && hasAuthority("CONSULTAR_USUARIOS_GRUPOS_PERMISSOES");
 	}
 
 	public boolean podeEditarUsuariosGruposPermissoes() {
-	    return temEscopoEscrita() && hasAuthority("EDITAR_USUARIOS_GRUPOS_PERMISSOES");
+		return temEscopoEscrita() && hasAuthority("EDITAR_USUARIOS_GRUPOS_PERMISSOES");
 	}
 
 	public boolean podePesquisarPedidos(Long clienteId, Long restauranteId) {
-	    return temEscopoLeitura() && (hasAuthority("CONSULTAR_PEDIDOS")
-	            || usuarioAutenticadoIgual(clienteId) || gerenciaRestaurante(restauranteId));
+		return temEscopoLeitura() && (hasAuthority("CONSULTAR_PEDIDOS") || usuarioAutenticadoIgual(clienteId)
+				|| gerenciaRestaurante(restauranteId));
 	}
 
 	public boolean podePesquisarPedidos() {
-	    return isAutenticado() && temEscopoLeitura();
+		return isAutenticado() && temEscopoLeitura();
 	}
 
 	public boolean podeConsultarFormasPagamento() {
-	    return isAutenticado() && temEscopoLeitura();
+		return isAutenticado() && temEscopoLeitura();
 	}
 
 	public boolean podeConsultarCidades() {
-	    return isAutenticado() && temEscopoLeitura();
+		return isAutenticado() && temEscopoLeitura();
 	}
 
 	public boolean podeConsultarEstados() {
-	    return isAutenticado() && temEscopoLeitura();
+		return isAutenticado() && temEscopoLeitura();
 	}
 
 	public boolean podeConsultarCozinhas() {
-	    return isAutenticado() && temEscopoLeitura();
+		return isAutenticado() && temEscopoLeitura();
 	}
 
 	public boolean podeConsultarEstatisticas() {
-	    return temEscopoLeitura() && hasAuthority("GERAR_RELATORIOS");
-	}   
-	
+		return temEscopoLeitura() && hasAuthority("GERAR_RELATORIOS");
+	}
+
 	private boolean hasAuthority(String authorityName) {
 		return getAuthentication().getAuthorities().stream()
-					.anyMatch(authority -> authority.getAuthority().equals(authorityName));
+				.anyMatch(authority -> authority.getAuthority().equals(authorityName));
 	}
 }
