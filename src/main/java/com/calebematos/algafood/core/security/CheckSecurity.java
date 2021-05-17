@@ -13,7 +13,7 @@ public @interface CheckSecurity {
 
 	public @interface Cozinhas {
 
-		@PreAuthorize("@algaSecurity.podeConsultarCozinhas()")
+		@PreAuthorize("@securityHelper.podeConsultarCozinhas()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
@@ -26,17 +26,17 @@ public @interface CheckSecurity {
 
 	public @interface Restaurantes {
 
-		@PreAuthorize("@algaSecurity.podeConsultarRestaurantes()")
+		@PreAuthorize("@securityHelper.podeConsultarRestaurantes()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
 
-		@PreAuthorize("@algaSecurity.podeGerenciarCadastroRestaurantes()")
+		@PreAuthorize("@securityHelper.podeGerenciarCadastroRestaurantes()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeGerenciarCadastro {}
 
-		@PreAuthorize("@algaSecurity.podeGerenciarFuncionamentoRestaurantes(#restauranteId)")
+		@PreAuthorize("@securityHelper.podeGerenciarFuncionamentoRestaurantes(#restauranteId)")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeGerenciarFuncionamento {}
@@ -53,7 +53,7 @@ public @interface CheckSecurity {
 		@Target(METHOD)
 		public @interface PodeBuscar {}
 
-		@PreAuthorize("@algaSecurity.podePesquisarPedidos(#filtro.clienteId, #filtro.restauranteId)")
+		@PreAuthorize("@securityHelper.podePesquisarPedidos(#filtro.clienteId, #filtro.restauranteId)")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodePesquisar {}
@@ -72,7 +72,7 @@ public @interface CheckSecurity {
 
 	public @interface FormasPagamento {
 
-		@PreAuthorize("@algaSecurity.podeConsultarFormasPagamento()")
+		@PreAuthorize("@securityHelper.podeConsultarFormasPagamento()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
@@ -86,7 +86,7 @@ public @interface CheckSecurity {
 
 	public @interface Cidades {
 
-		@PreAuthorize("@algaSecurity.podeConsultarCidades()")
+		@PreAuthorize("@securityHelper.podeConsultarCidades()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
@@ -100,7 +100,7 @@ public @interface CheckSecurity {
 	
 	public @interface Estados {
 		
-		@PreAuthorize("@algaSecurity.podeConsultarEstados()")
+		@PreAuthorize("@securityHelper.podeConsultarEstados()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
@@ -114,12 +114,12 @@ public @interface CheckSecurity {
 	
 	public @interface UsuariosGruposPermissoes {
 		
-		@PreAuthorize("@algaSecurity.podeConsultarUsuariosGruposPermissoes()")
+		@PreAuthorize("@securityHelper.podeConsultarUsuariosGruposPermissoes()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}
 		
-		@PreAuthorize("@algaSecurity.podeEditarUsuariosGruposPermissoes()")
+		@PreAuthorize("@securityHelper.podeEditarUsuariosGruposPermissoes()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeEditar {}
@@ -139,7 +139,7 @@ public @interface CheckSecurity {
 	
 	public @interface Estatisticas {
 		
-		@PreAuthorize("@algaSecurity.podeConsultarEstatisticas()")
+		@PreAuthorize("@securityHelper.podeConsultarEstatisticas()")
 		@Retention(RUNTIME)
 		@Target(METHOD)
 		public @interface PodeConsultar {}

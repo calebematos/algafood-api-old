@@ -48,7 +48,6 @@ import com.calebematos.algafood.domain.model.Restaurante;
 import com.calebematos.algafood.domain.repository.RestauranteRepository;
 import com.calebematos.algafood.domain.service.RestauranteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
@@ -216,10 +215,6 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 			Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
 
-			JsonNode n;
-			
-		
-			
 			dadosOrigem.forEach((nomePropriedade, valorPropriedade) -> {
 				Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
 				field.setAccessible(true);
